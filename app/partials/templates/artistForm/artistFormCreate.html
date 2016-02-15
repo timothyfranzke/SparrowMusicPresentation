@@ -1,0 +1,13 @@
+<p>Artist</p>
+<form>
+    <span ng-init="something = true"></span>
+    <div class="slide" ng-show="something">
+        <input type="text" ng-model="artist.name" placeholder="Artist Name"/><br/>
+        <input type="text" ng-model="artist.zip" placeholder="Zip Code"/> <br/>
+    </div>
+    <div class="slide" ng-show="!something">
+        <input type="text" placeholder="Economy"/>
+    </div>
+
+    <input type="checkbox" ng-model="something"/>
+</form>

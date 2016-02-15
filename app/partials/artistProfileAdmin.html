@@ -1,0 +1,294 @@
+<div class="container" style="background-color: white">
+<div class="section" ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)">
+    <div class="row text-center"ng-class="settings.theme.bg">
+        <div class="artist-profile-img">
+            <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" height="150" width="150"/>
+            <img ng-show="!settings.hasImage" ng-class="settings.theme.border" ng-src="{{settings.theme.img}}" height="150" width="150"/>
+            <button type="button" class="btn btn-circle btn-sm artist-profile-img-edit" ng-click="openArtistImage()"><i class="glyphicon glyphicon-pencil"></i></button>
+        </div>
+
+    </div>
+    <div class="row" style="height:50px"><button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button> </div>
+    <div class="row text-center artist-header">
+        <h1>{{selectedArtist.artistName}}</h1>
+    </div>
+</div>
+<div class="section album-section">
+
+    <div class="row text-center album-desc">
+        <button type="button" class="btn btn-circle btn-sm album-create" ng-click="openAlbum('Create')"><i class="glyphicon glyphicon-cd"></i></button>
+        Albums
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
+            <button type="button" class="btn btn-circle btn-sm album-profile-img-edit" ng-click="openAlbumImage()"><i class="glyphicon glyphicon-pencil"></i></button>
+        </div>
+        <div class="col-lg-6">
+            <div class="album-header">
+                {{selectedAlbum.albumName}}
+                <i class="glyphicon glyphicon-pencil" ng-click="openAlbum('Update')"></i>
+            </div>
+            <div class="track-listing">
+                <ul style="list-style: none; padding:0px">
+                    <li ng-repeat="item in selectedAlbum.tracks">
+                        <span ng-click="play($index)" >{{$index + 1}} {{item.trackName}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <img ng-repeat="album in selectedArtist.albums" class="albumSection clickable album-item"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="75" width="75"/>
+    </div>
+</div>
+<div class="section">
+    <div class="row text-center album-desc">
+        <button type="button" class="btn btn-circle btn-sm album-create" ng-click="openEvent()"><i class="glyphicon glyphicon-plus-sign"></i></button>
+        Events
+    </div>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>When</th>
+                <th>Where</th>
+                <th>What</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="event in selectedArtist.events">
+                <td>{{event.eventDate}}</td>
+                <td>{{event.address}}  {{event.city}}, {{event.state}}</td>
+                <td><a href="{{event.url}}">{{event.eventName}} </a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h1>{{selectedArtist.artistName}}</h1>
+<br/>
+<div ng-show="isArtistSelected">
+    <div ng-show="isCreateingArtistImage">
+        <input type="file" img-cropper-fileread image="cropper.sourceImage" />
+        <div>
+            <canvas width="500" height="300" id="canvas" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+        </div>
+        <input type="button" value="Create Image" ng-click="createArtistImage()"/>
+        <input type="button" value="Cancel" ng-click="cancelAlbumImage()"/>
+    </div>
+    <img ng-src="{{selectedArtist.imageURL}}" height="150" width="150"/>
+    <span ng-click="showCreateArtistImage()" class="edit">edit</span>
+    <br/>
+    <br/>
+    <span ng-show="!hasAlbums">There are currently no albums associated with this artist</span>
+
+    <div id="album" class="section alt">
+        <div ng-show="hasAlbums">
+            <span ng-click="showCreateAlbum()" class="edit">+ create an album</span>
+        </div>
+        <br/>
+        <div class="header">
+           {{selectedAlbum.albumName}}
+            <span class="edit" ng-click="showUpdateAlbum()">edit</span>
+        </div>
+        <div ng-show="isCreatingAlbum">
+            <form ng-init="album = {}">
+                <input type="text" ng-model="album.albumName" placeholder="Album Name"/>
+                <br/>
+                <input type="text" ng-model="album.description" placeholder="Description"/>
+                <br/>
+                <input type="date" ng-model="album.releaseDate" placeholder="Release Date"/><span class="edit">The album won't be visible until the release date</span>
+                <br/>
+                <input type="button" ng-show="isCreatingAlbum" ng-click="createAlbum(album)" value="create"/>
+                <input type="button" ng-show="isUpdatingAlbum" ng-click="updateAlbum(album)" value="update"/>
+                <input type="button" ng-click="cancelCreate()"  value="cancel"/>
+            </form>
+        </div>
+        <div>
+            <div ng-show="isCreateingAlbumImage">
+                <input type="file" img-cropper-fileread image="cropper.sourceImage" />
+                <div>
+                    <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.albumImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                </div>
+                <input type="button" value="Create Image" ng-click="createAlbumImage()"/>
+                <input type="button" value="Cancel" ng-click="cancelAlbumImage()"/>
+            </div>
+            <span ng-click="showCreateAlbumImage()" class="edit">edit</span>
+            <img ng-src="{{selectedAlbum.imageURL}}" height="150" width="150"/>
+            <div>
+                <span>Released: {{selectedAlbum.releaseDate}}</span>
+            </div>
+        </div>
+        <div id="tracks">
+            <input type="file" nv-file-select="" uploader="uploader" multiple placeholder="+ add tracks" />
+            <div ng-show="uploader.queue.length > 0">
+
+                <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                <h2>Total tracks selected: {{ uploader.queue.length }}</h2>
+                <ul>
+                    <li ng-repeat="item in uploader.queue">
+                        <div>Name: <input type="text" ng-model="item.file.name"/></div>
+                        <div>Size: {{ item.file.size/1024/1024|number:2 }} Mb</div>
+                        <div ng-show="uploader.isHTML5">
+                            Progress: {{ item.progress }}
+                            <div class="item-progress-box">
+                                <div class="item-progress" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <!--div ng-if="controller.isImage(item._file)"-->
+                            <!--Thumbnail (only images):-->
+                            <!-- Image preview -->
+                            <!--auto height-->
+                            <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                            <!--auto width-->
+                            <!--<div ng-thumb="{ file: item._file, height: 100 }"></div>-->
+                            <!--fixed width and height -->
+                            <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                        <!--/div-->
+                        <div>
+                            <i ng-click="item.remove()" class="fa fa-trash-o clickable"></i>
+                        </div>
+                    </li>
+                    <div id="uploaderButtons" ng-show="uploader.queue.length > 0">
+                        <i class="fa fa-cloud-upload clickable" ng-click="uploadAll()"></i>
+                        <input type="button" ng-click="cancelCreate()" value="cancel"/>
+                    </div>
+
+                </ul>
+            </div>
+            <span class="subheader">Track Listing</span>
+            <ul>
+                <li ng-repeat="item in selectedAlbum.tracks">
+                    <span ng-click="play(item.trackId)">{{item.trackName}}</span> <span class="edit" ng-click="deleteTrack(item, $index)">x remove</span>
+                </li>
+            </ul>
+        </div>
+        <div id="albumSection">
+            <span ng-repeat="album in selectedArtist.albums">
+                <img class="albumSection clickable"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="50" width="50"/>
+            </span>
+
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+    <div id="events" class="section alt">
+        <div class="header">Events <span class="edit" ng-click="showCreateEvent()">+ create event</span></div>
+        <div ng-show="isCreatingEvent">
+            <input type="text" ng-model="event.name" placeholder="Name"/>
+            <input type="text" ng-model="event.description" placeholder="Description"/>
+            <input type="date" ng-model="event.eventDate" placeholder="Event Date"/>
+            <input type="text" ng-model="event.address" placeholder="Address"/>
+            <input type="text" ng-model="event.city" placeholder="City"/>
+            <input type="text" ng-model="event.state" placeholder="State"/>
+            <input type="url" ng-model="event.url" placeholder="URL"/>
+            <input type="button" ng-click="createArtistEvent(event)"  value="create"/>
+            <input type="button" ng-click="cancelCreate()"  value="cancel"/>
+        </div>
+        <ul>
+            <li ng-repeat="event in selectedArtist.events"><strong>{{event.eventDate}}</strong> <a ng-href="{{event.url}}">{{event.name}} {{event.address}}  {{event.city}}, {{event.state}}</a>
+                <i ng-click="deleteEvent($index)" class="fa fa-trash-o"></i>
+            </li>
+        </ul>
+    </div>
+
+    <br/>
+    <br/>
+    <div id="genre" class="section alt">
+        <div class="header">Genres</div>
+        <span class="edit">select a genre</span>
+        <select ng-options="i.genreId as i.genre for i in genres" ng-model="selectedGenre">
+            <option ng-repeat="i in genres" ng-click="addGenre(i)">{{i.genre}}</option>
+        </select>
+        <ul>
+            <li ng-repeat="artistGenre in selectedArtist.genres">{{artistGenre.genre}}  <span class="edit" ng-click="deleteGenre(artistGenre.genreId)"> x remove</span></li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- modals -->
+<modal title="Create An Album" visible="isCreatingAlbum">
+    <form ng-init="album = {}">
+        <input type="text" ng-model="album.albumName" placeholder="Album Name"/>
+        <br/>
+        <input type="text" ng-model="album.description" placeholder="Description"/>
+        <br/>
+        <input type="date" ng-model="album.releaseDate" placeholder="Release Date"/><span class="edit">The album won't be visible until the release date</span>
+        <br/>
+        <input type="button" ng-show="isCreatingAlbum" ng-click="createAlbum(album)" value="create"/>
+        <input type="button" ng-show="isUpdatingAlbum" ng-click="updateAlbum(album)" value="update"/>
+        <input type="button" ng-click="cancelCreate()"  value="cancel"/>
+    </form>
+</modal>
+    </div>
+<br/><br/><br/><br/><br/><br/><br/><br/>
+<script type="text/ng-template" id="event.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Create Event</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-group" ng-int="event">
+            <div class="form-group">
+                <label for="what">What is the event?</label>
+                <input id="what" type="text" class="input-group-lg form-control" ng-model="event.name" placeholder="What"/>
+            </div>
+            <div class="form-group">
+                <label for="when">When is it?</label>
+                <input id="when" type="date" class="form-control" ng-model="event.eventDate" placeholder="Event Date"/>
+            </div>
+            <div class="form-group">
+                <label>Where's it happening?</label>
+                <input class="form-control" type="text" ng-model="event.address" placeholder="Address"/>
+                <input class="form-control" type="text" ng-model="event.city" placeholder="City"/>
+                <input class="form-control" type="text" ng-model="event.state" placeholder="State"/>
+            </div>
+            <div class="form-group">
+                <label for="url">Venue URL?</label>
+                <input class="form-control" id="url" type="url" ng-model="event.url" placeholder="URL"/>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" ng-disable="!event.name || !event.eventDate || !event.address" ng-click="ok(event)">OK</button>
+        <button class="btn" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="album.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{modify}} Album</h3>
+    </div>
+    <div class="modal-body">
+        <form ng-init="album = items">
+            <input class="input-sm" type="text" ng-model="album.albumName" placeholder="Album Name"/>
+            <br/>
+            <input class="input-sm" type="text" ng-model="album.description" placeholder="Description"/>
+            <br/>
+            <input class="input-sm" type="date" ng-model="album.releaseDate" placeholder="Release Date"/><span class="edit">The album won't be visible until the release date</span>
+            <!--br/>
+            <uib-datepicker ng-model="album.releaseDate" min-date="minDate" show-weeks="true" class="well well-sm"></uib-datepicker-->
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" ng-click="ok(album)">OK</button>
+        <button class="btn" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="image.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Image</h3>
+    </div>
+    <div class="modal-body">
+        <input type="file" class="btn" img-cropper-fileread image="cropper.sourceImage" />
+        <div>
+            <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" ng-click="ok(cropper.croppedImage)">OK</button>
+        <button class="btn" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

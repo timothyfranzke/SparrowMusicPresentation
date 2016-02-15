@@ -1,0 +1,57 @@
+<div class="row" style="background-color: white">
+    <div class="col-xs-3 col-lg-2" ng-repeat="item in player.playlist" style="float:left; margin:10px;">
+        <div class="row">
+            <img class="clickable img-thumbnail" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" height="200px" width="200px"/>
+            <img class="clickable img-thumbnail" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" height="200px" width="200px"/>
+        </div>
+        <div class="row text-center">
+            <a ui-sref="player.artistProfile({id: item.artistId})">{{item.artistName}}</a>
+        </div>
+    </div>
+</div>
+
+<br/>
+<br/>
+<br/>
+<div id="genres" class="filterItem" ng-show="genreShow">
+    <label class="edit">Genres</label>
+    <span ng-repeat="genre in player.currentFilter.genres" ng-model="player.currentFilter.genres">{{genre.genre}}<input type="checkbox" ng-model="genre.selected" ng-change="player.filterPlaylist()"></span>
+</div>
+<div id="location" class="filterItem" ng-show="locationShow">
+    <label class="edit">Distance</label>
+    <select ng-model="player.currentFilter.location" ng-change="player.filterPlaylist()">
+        <option value="25">25 miles</option>
+        <option value="50">50 miles</option>
+        <option value="100">100 miles</option>
+        <option value="200">200 miles</option>
+        <option value="500">500 miles</option>
+        <option value="-1">Any distance</option>
+    </select>
+</div>
+<div id="popularity" class="filterItem" ng-show="popularityShow">
+    <label class="edit">Popularity</label>
+    <input type="range" ng-model="player.currentFilter.max" ng-change="player.filterPlaylist()" min="{{common.min}}" max="{{common.max}}" step="{{common.steps}}" value="{{common.max}}"/>
+</div>
+<div id="dateAdded" class="filterItem" ng-show="releaseDateShow">
+    <laebl class="edit">Release Date</laebl>
+    <input type="date" ng-model="player.currentFilter.startDate" ng-change="player.filterPlaylist()"/>
+    <input type="date" ng-model="player.currentFilter.endDate" ng-change="player.filterPlaylist()"/>
+</div>
+<div id="saveFilter" class="filterItem" ng-show="saveFilterFormShow">
+    <input type="text" ng-model="filter.name"/>
+    <input type="button" value="Save" ng-click="saveFilter(filter)" ng-disabled="!filter.name"/>
+</div>
+<div id="selectFilters" class="filterItem" ng-show="selectFilterShow">
+    <select ng-options="i.filter as i.name for i in player.filters" ng-model="selectedFilter" ng-change="applySelectedFilter(selectedFilter)"></select>
+</div>
+<div id="filters" class="filter" ng-show="filterShow">
+    <i class="fa fa-music clickable" ng-click="showGenres()"></i>
+    <i class="fa fa-group clickable" ng-click="showPopularity()"></i>
+    <i class="fa fa-map-marker clickable" ng-click="showLocation()"></i>
+    <i class="fa fa-calendar clickable" ng-click="showReleaseDate()"></i>
+</div>
+<div id="saveFilters" class="filter" ng-show="saveFilterShow">
+    <i class="fa fa-save clickable" ng-click="showSave()"></i>
+    <i class="fa fa-archive clickable" ng-click="showSelect()"></i>
+    <i class="fa fa-trash clickable" ng-click="player.clearFilter()"></i>
+</div>

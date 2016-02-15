@@ -1,0 +1,14 @@
+
+<div class="modal-dialog">
+    <h2>Register</h2>
+    <div class="loginmodal-container">
+        <form ng-model="UserModel">
+            <input type="text" ng-model="userModel.firstName" placeholder="First Name"/>
+            <input type="text" ng-model="userModel.lastName" placeholder="Last Name"/>
+            <input type="text" ng-model="userModel.email" placeholder="Email"/>
+            <input type="password" ng-model="userModel.password" placeholder="Password"/>
+            <input type="password" ng-model="confirmPassword" placeholder="Confirm Password" ng-blur="passwordCheck(userModel.password, confirmPassword)"/><i ng-show="!passwordsMatch && (userModel.password !== confirmPassword)" style="color:red">Password does not match</i>
+            <input type="submit" class="login loginmodal-submit" ng-keypress="checkKey()" ng-disabled="userModel.password !== confirmPassword || !userModel.password" value="Create Account" ng-click="register(userModel)"/>
+        </form>
+    </div>
+</div>

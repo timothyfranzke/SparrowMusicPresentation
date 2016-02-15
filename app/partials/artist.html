@@ -1,0 +1,15 @@
+<div>
+    <p ng-show="!hasAssociatedArtists">You don't have an artists yet.  Create one now!</p>
+    <div class="modal-dialog">
+        <div class="loginmodal-container">
+            <div>
+                <h3>select an artist </h3>
+                <select class="form-control" ng-options="artist.artistId as artist.artistName for artist in associatedArtists" ng-model="selectedArtistId"></select>
+                <md-button class="md-primary md-raised" ng-click="showAdvanced($event)"  flex="100"  flex-gt-md="auto"> Create An Artist
+                </md-button>
+                <br/>
+            </div>
+
+        </div>
+    </div>
+</div>

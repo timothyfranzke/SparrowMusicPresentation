@@ -1,0 +1,93 @@
+
+<md-dialog aria-label="Create Artist"  ng-cloak>
+    <form>
+        <div ng-controller="artistFormController">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>Create Artist</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="cancel()">
+                        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-dialog-content flex layout-padding>
+                <span ng-init="artistName = true"></span>
+                <span ng-init="artistTheme = false"></span>
+                <span ng-init="artistImage = false"></span>
+                <span ng-init="artistImageCropping = true"></span>
+                <span ng-init="artistImageCropped = false"></span>
+                <div layout="column" class="slide" ng-show="artistName" >
+                    <md-input-container>
+                        <label>Artist Name</label>
+                        <input ng-model="artist.name" type="text">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Postal Code</label>
+                        <input name="postalCode" ng-model="user.postalCode"
+                               required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                        <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+                            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+                            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+                                code.
+                            </div>
+                            <div ng-message="md-maxlength" class="my-message">
+                                Don't use the long version silly...we don't need to be that specific...
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" ng-show="artistTheme" class="slide">
+                    <form class="form-group loginmodal-container">
+                        <input type="text" ng-model="artist.theme" placeholder="Theme"/>
+                    </form>
+                </div>
+                <div layout="row" class="slide">
+                    <md-button class="md-primary md-raised" flex="100">
+                        <label for="file-input">Choose Artist Image</label>
+                    </md-button>
+                    <input id="file-input" type="file" img-cropper-fileread image="cropper.sourceImage">
+                    <md-button class="md-raised" flex="100">
+                        Not Now
+                    </md-button>
+                </div>
+                <div layout="row" ng-show="artistImage" class="slide">
+                    <div ng-show="artistImageCropping">
+                        <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                        <md-button class="md-primary md-raised" flex="100" ng-click="artistImageCropped=true;artistImageCropping=false">
+                            Crop
+                        </md-button>
+                    </div>
+
+                    <div ng-show="artistImageCropped">
+                        <img ng-src="{{cropper.croppedImage}}" flex="66"/>
+                        <md-button class="md-primary md-raised" flex="grow" ng-click="artistImageCropped=false;artistImageCropping=true">
+                            Re-Do
+                        </md-button>
+                    </div>
+                </div>
+                <input type="checkbox" ng-model="something"/>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <md-button ng-click="artistTheme=false; artistName=true" ng-show="artistTheme">
+                    Prev
+                </md-button>
+                <md-button ng-click="artistImage=false; artistTheme=true" ng-show="artistImage">
+                    Prev
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="artistTheme=true; artistName=false" ng-show="artistName">
+                    Next
+                </md-button>
+                <md-button ng-click="artistImage=true; artistTheme=false" ng-show="artistTheme">
+                    Next
+                </md-button>
+                <md-button ng-click="answer('useful')" ng-show="artistImage">
+                    Create
+                </md-button>
+            </md-dialog-actions>
+        </div>
+    </form>
+</md-dialog>
+
+                
