@@ -56,6 +56,7 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
         };
         userServices.unFollowArtist(model).then(function(data){
             $scope.$parent.followed = data;
+
         });
     };
 

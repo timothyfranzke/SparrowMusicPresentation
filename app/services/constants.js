@@ -6,7 +6,7 @@ var azure = 'http://sparrowservice.azurewebsites.net/';
 
 var arvixe = 'http://franzkesandbox.com.jasmine.arvixe.com/';
 
-var base = azure;
+var base = localhostWebApi;
 
 var ext = 'v1/api/';
 

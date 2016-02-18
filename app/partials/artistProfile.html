@@ -1,66 +1,64 @@
-<md-toolbar ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
-    <div class="row text-center">
+<section layout="column">
+    <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
         <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" height="150" width="150"/>
         <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="150" width="150"/>
     </div>
-    <div class="row" style="height:50px"><button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button> </div>
-</md-toolbar>
-<div class="row text-center artist-header">
-    <h1>{{selectedArtist.artistName}}</h1>
-</div>
-<div class="container-fluid" style="background-color: white">
-
-
-<section class="album-section">
-    <div layout="row center">
-        <h2 class="md-display-2">Albums</h2>
-        <md-icon md-font-icon="icon-home"></md-icon>
+    <div layout="row" flex>
+        <md-button ng-show="!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="followArtist()" class="md-raised">follow</md-button>
+        <md-button ng-show="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="unFollowArtist()" class="md-raised">unfollow</md-button>
     </div>
-    <div class="row">
-        <div class="col-lg-3 col-lg-offset-2">
-            <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
+    <!--div class="row" flex flex-offset="15" style="height:50px">
+        <button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button>
+    </div-->
+    <div layout="row" layout-align="center" class="artist-header">
+        <h1>{{selectedArtist.artistName}}</h1>
+    </div>
+    <md-content class="album-section" layout-align="center" layout-padding flex>
+        <div layout="row" layout-align="center">
+            <h2>Albums</h2>
         </div>
-        <div class="col-lg-6">
-            <div class="album-header">
-                {{selectedAlbum.albumName}}
+        <div layout="row" layout-align="center" class="albumSection"flex>
+            <div layout="column" flex="25">
+                <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
             </div>
-            <div class="track-listing">
-                <ul style="list-style: none; padding:0px">
-                    <li ng-repeat="item in selectedAlbum.tracks">
-                        <span ng-click="play($index)" >{{$index + 1}} {{item.trackName}}</span>
-                    </li>
-                </ul>
+            <div layout="column" flex="50">
+                <div class="album-header">
+                    {{selectedAlbum.albumName}}
+                </div>
+                <div class="track-listing">
+                    <ul style="list-style: none; padding:0px">
+                        <li ng-repeat="item in selectedAlbum.tracks">
+                            <span ng-click="play($index)" >{{$index + 1}} {{item.trackName}}</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row text-center">
-        <img ng-repeat="album in selectedArtist.albums" class="albumSection clickable album-item"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="75" width="75"/>
-    </div>
+        <div layout="row" layout-align="space-around">
+            <img ng-repeat="album in selectedArtist.albums" class="albumSection clickable"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="75" width="75"/>
+        </div>
+    </md-content>
+    <md-content layout-padding>
+        <div layout="row" layout-align="center">
+            <h2>Events</h2>
+        </div>
+        <div layout="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>When</th>
+                    <th>Where</th>
+                    <th>What</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="event in selectedArtist.events">
+                    <td>{{event.eventDate}}</td>
+                    <td>{{event.address}}  {{event.city}}, {{event.state}}</td>
+                    <td><a href="{{event.url}}">{{event.name}} </a></td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+    </md-content>
 </section>
-<div class="section">
-    <div class="row text-center album-desc">
-        Events
-    </div>
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>When</th>
-                <th>Where</th>
-                <th>What</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="event in selectedArtist.events">
-                <td>{{event.eventDate}}</td>
-                <td>{{event.address}}  {{event.city}}, {{event.state}}</td>
-                <td><a href="{{event.url}}">{{event.name}} </a></td>
-            </tr>
-            </tbody>
-            </table>
-    </div>
-</div>
-<br/>
-<span class="edit" ng-show="!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="followArtist()">follow</span>
-<span class="edit" ng-show="$parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1"  ng-click="unFollowArtist()">unfollow</span>
-</div>

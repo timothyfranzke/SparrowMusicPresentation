@@ -1,69 +1,83 @@
-<md-toolbar>
-    <md-button ng-click="toggleLeft()"
-               class="md-primary" hide-gt-md>
-        Toggle left
-    </md-button>
-</md-toolbar>
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-    <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">sparrow.</h1>
-    </md-toolbar>
-    <md-content layout-padding ng-controller="menuController as cntrl">
-        <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)"></md-autocomplete>
-        <md-button ng-click="close()" class="md-primary" hide-gt-md>
-            Discover
-        </md-button>
-        <md-button ng-click="close()" class="md-primary" hide-gt-md>
-            Close Sidenav Left
-        </md-button>
-        <p hide-md show-gt-md>
-            This sidenav is locked open on your device. To go back to the default behavior,
-            narrow your display.
-        </p>
+<section layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">sparrow.</h1>
+        </md-toolbar>
+        <md-content layout="column" layout-padding ng-controller="menuController as cntrl">
+            <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)"></md-autocomplete>
+            <md-button ng-click="goDiscover()" class="md-primary">
+                Discover
+            </md-button>
+            <md-button ng-click="goEvents()" class="md-primary">
+                Events
+            </md-button>
+            <md-button ng-click="goMyMusic()" class="md-primary">
+                My Music
+            </md-button>
+            <md-button ng-click="close()" class="md-primary">
+                Close Sidenav Left
+            </md-button>
+        </md-content>
+    </md-sidenav>
+    <md-content flex layout="column">
+        <md-toolbar layout="row">
+            <div class="md-toolbar-tools">
+                <!--md-button aria-label="Go Back" ng-click="toggleLeft()">
+                    Go Back
+                </md-button>
+                <h2>
+                    <span>Toolbar with Standard Buttons</span>
+                </h2>
+                <span flex></span>
+                <md-button class="md-raised" aria-label="Learn More">
+                    Learn More
+                </md-button>
+                <md-button class="md-fab md-mini" aria-label="Favorite">
+                    <md-icon md-svg-icon="img/icons/favorite.svg"></md-icon>
+                </md-button-->
+            </div>
+        </md-toolbar>
+        <ui-view></ui-view>
     </md-content>
-</md-sidenav>
-<md-content flex-lt-lg="66">
-    <ui-view></ui-view>
-</md-content>
 
-
-<md-toolbar layout="row" id="footer">
-    <div layout="column" flex="33">
-        <div layout="row">
-            <div layout="column" flex="33">
-                <md-button class="md-icon-button" aria-label="More">
-                    <md-icon md-svg-icon="img/svg/rewind26.svg"></md-icon>
-                </md-button>
-            </div>
-            <div layout="column" flex="33">
-                <md-button class="md-icon-button" aria-label="Play" ng-click="player.play()" ng-show="!player.playing">
-                    <md-icon md-svg-icon="img/svg/music253.svg"></md-icon>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Play" ng-click="player.pause()" ng-show="player.playing">
-                    <md-icon md-svg-icon="img/svg/pause52.svg"></md-icon>
-                </md-button>
-            </div>
-            <div layout="column" flex="33">
-                <md-button class="md-icon-button" aria-label="Play"  ng-click="player.next()">
-                    <md-icon md-svg-icon="img/svg/fast19.svg"></md-icon>
-                </md-button>
+    <md-toolbar layout="row" id="footer">
+        <div layout="column" flex="20" >
+            <div layout="row" layout-align="space-between">
+                <div layout="column">
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="img/svg/rewind26.svg"></md-icon>
+                    </md-button>
+                </div>
+                <div layout="column">
+                    <md-button class="md-icon-button" aria-label="Play" ng-click="player.play()" ng-show="!player.playing">
+                        <md-icon md-svg-icon="img/svg/music253.svg"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="Play" ng-click="player.pause()" ng-show="player.playing">
+                        <md-icon md-svg-icon="img/svg/pause52.svg"></md-icon>
+                    </md-button>
+                </div>
+                <div layout="column">
+                    <md-button class="md-icon-button" aria-label="Play"  ng-click="player.next()">
+                        <md-icon md-svg-icon="img/svg/fast19.svg"></md-icon>
+                    </md-button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="column" flex="33" class="btn-filter">
-        <md-button class="md-fab" aria-label="Eat cake" ng-click="showFilterBottom()">
-            <md-icon md-svg-src="img/svg/filter18.svg"></md-icon>
-        </md-button>
-    </div>
-    <div layout="column" flex="33" class="text-left">
-        <div layout="row">
-            <div layout="column" flex="100" class="track-description">
-                <span class="md-caption">{{player.trackName()}}</span>
-                <span class="md-caption md-accent">{{player.artistName()}}</span>
-            </div>
-            <div layout="column" flex="33">
-                <img class="track-image" ng-src="{{player.image()}}" height="40px" width="40px"/>
+        <div class="column" flex="33" class="btn-filter">
+            <md-button class="md-fab" aria-label="Eat cake" ng-click="showFilterBottom()">
+                <md-icon md-svg-src="img/svg/filter18.svg"></md-icon>
+            </md-button>
+        </div>
+        <div layout="column" flex="33" class="text-left">
+            <div layout="row">
+                <div layout="column" flex="100" class="track-description">
+                    <span class="md-caption">{{player.trackName()}}</span>
+                    <span class="md-caption md-accent">{{player.artistName()}}</span>
+                </div>
+                <div layout="column" flex="33">
+                    <img class="track-image" ng-src="{{player.image()}}" height="40px" width="40px"/>
+                </div>
             </div>
         </div>
-    </div>
-</md-toolbar>
+    </md-toolbar>
+</section>

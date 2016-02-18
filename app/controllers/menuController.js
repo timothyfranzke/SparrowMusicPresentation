@@ -1,9 +1,9 @@
 sprwApp.controller('menuController', function($scope, $state, playlistServices){
     $scope.close = function () {
-        $mdSidenav('left').close()
-            .then(function () {
-                $log.debug("close LEFT is done");
-            });
+        //$mdSideNav('left').close()
+        //    .then(function () {
+        //        $log.debug("close LEFT is done");
+        //    });
     };
     $scope.searchTerm = "";
     $scope.results = [];
@@ -20,5 +20,14 @@ sprwApp.controller('menuController', function($scope, $state, playlistServices){
             }
             $scope.results = data.artists;
         })
-    }
+    };
+    $scope.goDiscover = function(){
+        $state.go("player.discover");
+    };
+    $scope.goMyMusic = function(){
+        $state.go("player.createArtist");
+    };
+    $scope.goEvents = function(){
+        $state.go("player.events");
+    };
 });
