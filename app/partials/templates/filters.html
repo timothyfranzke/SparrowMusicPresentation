@@ -1,14 +1,29 @@
 <md-bottom-sheet class="md-list md-has-header" ng-cloak>
-    <md-list layout-align="space-around">
-        <md-button>
+    <md-list layout-align="space-around" ng-show="!popularityShow && !genreShow" class="slide">
+        <md-button ng-click="showGenres()">
             Genre
         </md-button>
-        <md-button>
+        <md-button ng-click="showReleaseDate()">
             Release Date
         </md-button>
-        <md-button>
-            Something
+        <md-button ng-click="showPopularity()">
+            Popularity
         </md-button>
     </md-list>
-    
+    <div id="popularityFilter" ng-show="popularityShow" class="slide">
+        <md-slider ng-model="player.currentFilter.max" ng-change="player.filterPlaylist()" flex min="0" max="255" min="{{common.min}}" max="{{common.max}}" aria-label="popularity" id="popularity-slider" class>
+        </md-slider>
+    </div>
+    <div id="genreFilter" ng-show="genreShow" class="slide">
+        <md-input-container>
+            <label>Select your genres</label>
+            <md-select ng-model="selectedGenre" multiple="true">
+                <md-option ng-value="opt" ng-repeat="genre in player.currentFilter.genres" ng-click="selectGenre(genre.genreId)">{{ genre.genre }}</md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div id="releaseDateFilter" ng-show="releaseDateShow">
+        <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="player.filterPlaylist()"></md-datepicker>
+        <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="player.filterPlaylist()"></md-datepicker>
+    </div>
 </md-bottom-sheet>

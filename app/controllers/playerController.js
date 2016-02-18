@@ -164,6 +164,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.releaseDateShow = true;
     };
     $scope.showPopularity = function(){
+        console.log("showPopularity");
         closeAllFilters();
         $scope.popularityShow = true;
     };
@@ -181,8 +182,8 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     $scope.showFilterBottom = function(){
         $mdBottomSheet.show({
             templateUrl: 'app/partials/templates/filters.html',
-            controller: 'artistFormController',
-            clickOutsideToClose: true
+                clickOutsideToClose: true,
+            controller: 'filterController'
         }).then(function(clickedItem) {
             $mdToast.show(
                 $mdToast.simple()
