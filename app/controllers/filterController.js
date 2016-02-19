@@ -1,5 +1,6 @@
 sprwApp.controller('filterController', function($scope, playerService){
     $scope.player = playerService;
+    $scope.distances = [50,100,200,500,'Any'];
     $scope.selectedFilter = {};
     $scope.filterDisplayGenres = [];
     $scope.selectFilter = function(){

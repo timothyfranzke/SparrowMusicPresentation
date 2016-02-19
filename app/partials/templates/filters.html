@@ -1,5 +1,5 @@
-<md-bottom-sheet class="md-list md-has-header" ng-cloak>
-    <md-list layout-align="space-around" ng-show="!popularityShow && !genreShow" class="slide">
+<md-bottom-sheet class="md-list md-has-header" ng-cloak layout="row" layout-align="center">
+    <md-list ng-show="!popularityShow && !genreShow && !releaseDateShow && !locationShow" class="slideInOut">
         <md-button ng-click="showGenres()">
             Genre
         </md-button>
@@ -9,12 +9,17 @@
         <md-button ng-click="showPopularity()">
             Popularity
         </md-button>
+        <md-button ng-click="showLocation()">
+            Location
+        </md-button>
     </md-list>
-    <div id="popularityFilter" ng-show="popularityShow" class="slide">
+    <div id="popularityFilter" ng-show="popularityShow" class="slideOutIn">
+        <md-button ng-click="hideSpecificFilter()">Back</md-button>
         <md-slider ng-model="player.currentFilter.max" ng-change="player.filterPlaylist()" flex min="0" max="255" min="{{common.min}}" max="{{common.max}}" aria-label="popularity" id="popularity-slider" class>
         </md-slider>
+        <h4>Very Popular</h4>
     </div>
-    <div id="genreFilter" ng-show="genreShow" class="slide">
+    <div id="genreFilter" ng-show="genreShow" class="slideOutIn">
         <md-input-container>
             <label>Select your genres</label>
             <md-select ng-model="selectedGenre" multiple="true">
@@ -22,8 +27,16 @@
             </md-select>
         </md-input-container>
     </div>
-    <div id="releaseDateFilter" ng-show="releaseDateShow">
+    <div id="releaseDateFilter" ng-show="releaseDateShow" class="slideOutIn">
+        <label>Released On</label>
         <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="player.filterPlaylist()"></md-datepicker>
         <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="player.filterPlaylist()"></md-datepicker>
     </div>
+    <div id="locationFilter" ng-show="locationShow" class="slideOutIn">
+        <md-select ng-model="selectedDistance">
+            <md-option ng-value="distance" ng-repeat="distance in distances"> {{distance }}</md-option>
+        </md-select>
+        <h4> miles from me</h4>
+    </div>
+
 </md-bottom-sheet>

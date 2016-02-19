@@ -22,6 +22,7 @@
     <md-content flex layout="column">
         <md-toolbar layout="row">
             <div class="md-toolbar-tools">
+                <md-button ng-click="toggleLeft()">sparrow.</md-button>
                 <!--md-button aria-label="Go Back" ng-click="toggleLeft()">
                     Go Back
                 </md-button>
@@ -41,7 +42,7 @@
     </md-content>
 
     <md-toolbar layout="row" id="footer">
-        <div layout="column" flex="20" >
+        <div layout="column" flex="20" flex-offset="7">
             <div layout="row" layout-align="space-between">
                 <div layout="column">
                     <md-button class="md-icon-button" aria-label="More">
@@ -63,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="column" flex="33" class="btn-filter">
+        <div class="column" flex="33"  flex-offset="6" class="btn-filter">
             <md-button class="md-fab" aria-label="Eat cake" ng-click="showFilterBottom()">
                 <md-icon md-svg-src="img/svg/filter18.svg"></md-icon>
             </md-button>
