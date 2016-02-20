@@ -2,6 +2,31 @@ body{
     background-color: white;
     font-family: 'Open Sans', sans-serif;
 }
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
 .section{
     margin: 20px;
     padding: 10px;
@@ -158,7 +183,7 @@ input[type=file] {padding:5px 15px; background:#ccc; border:0 none;
     width:300px;
 }
 .btn-filter{
-    top: -25px;
+    bottom: 25px;
     position:relative;
 }
 

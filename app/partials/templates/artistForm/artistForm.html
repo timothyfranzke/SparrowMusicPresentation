@@ -1,4 +1,3 @@
-
 <md-dialog aria-label="Create Artist"  ng-cloak>
     <form>
         <div ng-controller="artistFormController">
@@ -12,12 +11,7 @@
                 </div>
             </md-toolbar>
             <md-dialog-content flex layout-padding>
-                <span ng-init="artistName = true"></span>
-                <span ng-init="artistTheme = false"></span>
-                <span ng-init="artistImage = false"></span>
-                <span ng-init="artistImageCropping = true"></span>
-                <span ng-init="artistImageCropped = false"></span>
-                <div layout="column" class="slide" ng-show="artistName" >
+                <div layout="column" class="slide" ng-show="artistNameShow" >
                     <md-input-container>
                         <label>Artist Name</label>
                         <input ng-model="artist.name" type="text">
@@ -37,12 +31,13 @@
                         </div>
                     </md-input-container>
                 </div>
-                <div layout="row" ng-show="artistTheme" class="slide">
-                    <form class="form-group loginmodal-container">
-                        <input type="text" ng-model="artist.theme" placeholder="Theme"/>
-                    </form>
+                <div layout="row" ng-show="artistThemeShow" class="slide">
+                    <h3>Choose A Theme</h3>
+                    <md-select ng-model="selectedGenre" multiple="true">
+                        <md-option ng-value="opt" ng-repeat="theme in themes" ng-model="artist.theme">{{ genre.genre }}</md-option>
+                    </md-select>
                 </div>
-                <div layout="row" class="slide">
+                <div layout="row" class="slide" ng-show="artistImageSelectShow">
                     <md-button class="md-primary md-raised" flex="100">
                         <label for="file-input">Choose Artist Image</label>
                     </md-button>
@@ -51,20 +46,20 @@
                         Not Now
                     </md-button>
                 </div>
-                <div layout="row" ng-show="artistImage" class="slide">
-                    <div ng-show="artistImageCropping">
-                        <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
-                        <md-button class="md-primary md-raised" flex="100" ng-click="artistImageCropped=true;artistImageCropping=false">
-                            Crop
-                        </md-button>
-                    </div>
+                <div layout="row" class="slide" ng-show="artistNoImageConfirmShow">
 
-                    <div ng-show="artistImageCropped">
-                        <img ng-src="{{cropper.croppedImage}}" flex="66"/>
-                        <md-button class="md-primary md-raised" flex="grow" ng-click="artistImageCropped=false;artistImageCropping=true">
-                            Re-Do
-                        </md-button>
-                    </div>
+                </div>
+                <div layout="row" ng-show="artistImageCropShow" class="slide">
+                    <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                    <md-button class="md-primary md-raised" flex="100" ng-click="artistImageCropped=true;artistImageCropping=false">
+                        Crop
+                    </md-button>
+                </div>
+                <div layout="row" ng-show="artistImageCropResultShow" class="slide">
+                    <img ng-src="{{cropper.croppedImage}}" flex="66"/>
+                    <md-button class="md-primary md-raised" flex="grow" ng-click="artistImageCropped=false;artistImageCropping=true">
+                        Re-Do
+                    </md-button>
                 </div>
                 <input type="checkbox" ng-model="something"/>
             </md-dialog-content>

@@ -76,14 +76,14 @@
 }
 
 /* slide in to the left */
-@keyframes slideOutLeft {
-    to      { transform: translateX(0); }
+@keyframes slideInLeft {
+    from      { transform: translateX(-200%); }
 }
-@-moz-keyframes slideOutLeft {
-    to      { -moz-transform: translateX(0); }
+@-moz-keyframes slideInLeft {
+    from      { -moz-transform: translateX(-200%); }
 }
-@-webkit-keyframes slideOutLeft {
-    to      { -webkit-transform: translateX(0); }
+@-webkit-keyframes slideInLeft {
+    from      { -webkit-transform: translateX(-200%); }
 }
 
 /* slide in from the right */

@@ -1,25 +1,30 @@
 <md-bottom-sheet class="md-list md-has-header" ng-cloak layout="row" layout-align="center">
     <md-list ng-show="!popularityShow && !genreShow && !releaseDateShow && !locationShow" class="slideInOut">
-        <md-button ng-click="showGenres()">
-            Genre
+        <md-button class="md-icon-button" aria-label="Genres" ng-click="showGenres()">
+            <md-icon class="material-icons" ng-class="md-48">headset</md-icon>
         </md-button>
-        <md-button ng-click="showReleaseDate()">
-            Release Date
+        <md-button class="md-icon-button" aria-label="Release Date" ng-click="showReleaseDate()">
+            <md-icon class="material-icons" ng-class="md-48">date_range</md-icon>
         </md-button>
-        <md-button ng-click="showPopularity()">
-            Popularity
+        <md-button class="md-icon-button" aria-label="Popularity" ng-click="showPopularity()">
+            <md-icon class="material-icons" ng-class="md-48">insert_emoticon</md-icon>
         </md-button>
-        <md-button ng-click="showLocation()">
-            Location
+        <md-button class="md-icon-button" aria-label="Location" ng-click="showLocation()">
+            <md-icon class="material-icons" ng-class="md-48">location_on</md-icon>
         </md-button>
     </md-list>
     <div id="popularityFilter" ng-show="popularityShow" class="slideOutIn">
-        <md-button ng-click="hideSpecificFilter()">Back</md-button>
+        <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
+            <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
+        </md-button>
         <md-slider ng-model="player.currentFilter.max" ng-change="player.filterPlaylist()" flex min="0" max="255" min="{{common.min}}" max="{{common.max}}" aria-label="popularity" id="popularity-slider" class>
         </md-slider>
         <h4>Very Popular</h4>
     </div>
     <div id="genreFilter" ng-show="genreShow" class="slideOutIn">
+        <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
+            <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
+        </md-button>
         <md-input-container>
             <label>Select your genres</label>
             <md-select ng-model="selectedGenre" multiple="true">
@@ -28,6 +33,9 @@
         </md-input-container>
     </div>
     <div id="releaseDateFilter" ng-show="releaseDateShow" class="slideOutIn">
+        <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
+            <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
+        </md-button>
         <label>Released On</label>
         <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="player.filterPlaylist()"></md-datepicker>
         <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="player.filterPlaylist()"></md-datepicker>
