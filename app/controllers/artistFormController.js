@@ -6,6 +6,7 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
     $scope.artistImageCropShow = false;
     $scope.artistNoImageConfirmShow = true;
     $scope.artistImageCropResultShow = false;
+    $scope.artistFinalizeShow = false;
 
     $scope.themes = [
         {color: "Red", class:"sparrow-red"},
@@ -16,8 +17,62 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
 
     if(userData.token === undefined || userData.userEmail === undefined) {
         $state.go("login");
-    }
+    };
 
+    $scope.goArtistTheme = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = true;
+        $scope.artistImageSelectShow = false;
+        $scope.artistImageCropShow = false;
+        $scope.artistNoImageConfirmShow = true;
+        $scope.artistImageCropResultShow = false;
+        $scope.artistFinalizeShow = false;
+    }
+    $scope.goArtistImageSelect = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = false;
+        $scope.artistImageSelectShow = true;
+        $scope.artistImageCropShow = false;
+        $scope.artistNoImageConfirmShow = true;
+        $scope.artistImageCropResultShow = false;
+        $scope.artistFinalizeShow = false;
+    }
+    $scope.goArtistImageCrop = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = false;
+        $scope.artistImageSelectShow = false;
+        $scope.artistImageCropShow = true;
+        $scope.artistNoImageConfirmShow = false;
+        $scope.artistImageCropResultShow = false;
+        $scope.artistFinalizeShow = false;
+    }
+    $scope.goArtistNoImageConfirm = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = true;
+        $scope.artistImageSelectShow = false;
+        $scope.artistImageCropShow = false;
+        $scope.artistNoImageConfirmShow = true;
+        $scope.artistImageCropResultShow = false;
+        $scope.artistFinalizeShow = false;
+    }
+    $scope.goImageCropResult = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = false;
+        $scope.artistImageSelectShow = false;
+        $scope.artistImageCropShow = false;
+        $scope.artistNoImageConfirmShow = false;
+        $scope.artistImageCropResultShow = true;
+        $scope.artistFinalizeShow = false;
+    }
+    $scope.goArtistFinalize = function(){
+        $scope.artistNameShow = false;
+        $scope.artistThemeShow = false;
+        $scope.artistImageSelectShow = false;
+        $scope.artistImageCropShow = false;
+        $scope.artistNoImageConfirmShow = false;
+        $scope.artistImageCropResultShow = false;
+        $scope.artistFinalizeShow = true;
+    }
     $scope.createArtist = function(artist){
         $scope.isCreatingArtist = false;
         artist.token = userData.token;
@@ -28,6 +83,16 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         })
 
     };
+    //
+    //$scope.$watch('cropper.sourceImage', function(newVal){
+    //    $scope.artistNameShow = false;
+    //    $scope.artistThemeShow = false;
+    //    $scope.artistImageSelectShow = false;
+    //    $scope.artistImageCropShow = true;
+    //    $scope.artistNoImageConfirmShow = false;
+    //    $scope.artistImageCropResultShow = false;
+    //    $scope.artistFinalizeShow = false;
+    //})
 
     $scope.hide = function() {
         $mdDialog.hide();

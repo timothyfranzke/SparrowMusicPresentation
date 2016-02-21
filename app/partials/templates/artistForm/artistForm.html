@@ -46,24 +46,20 @@
                         Not Now
                     </md-button>
                 </div>
-                <div layout="row" class="slide" ng-show="artistNoImageConfirmShow">
-
-                </div>
                 <div layout="row" ng-show="artistImageCropShow" class="slide">
                     <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
-                    <md-button class="md-primary md-raised" flex="100" ng-click="artistImageCropped=true;artistImageCropping=false">
-                        Crop
-                    </md-button>
                 </div>
                 <div layout="row" ng-show="artistImageCropResultShow" class="slide">
                     <img ng-src="{{cropper.croppedImage}}" flex="66"/>
-                    <md-button class="md-primary md-raised" flex="grow" ng-click="artistImageCropped=false;artistImageCropping=true">
+                    <md-button class="md-primary md-raised" flex="grow" ng-click="goArtistImageCrop()">
                         Re-Do
                     </md-button>
                 </div>
-                <input type="checkbox" ng-model="something"/>
             </md-dialog-content>
             <md-dialog-actions layout="row">
+                <md-button ng-click="artistTheme=false; artistName=true" ng-show="artistTheme">
+                    Prev
+                </md-button>
                 <md-button ng-click="artistTheme=false; artistName=true" ng-show="artistTheme">
                     Prev
                 </md-button>
@@ -71,8 +67,14 @@
                     Prev
                 </md-button>
                 <span flex></span>
-                <md-button ng-click="artistTheme=true; artistName=false" ng-show="artistName">
+                <md-button class="md-primary md-raised" ng-click="goArtistTheme()" ng-show="artistNameShow">
                     Next
+                </md-button>
+                <md-button class="md-primary md-raised" ng-click="goArtistImageSelect()" ng-show="artistThemeShow">
+                    Next
+                </md-button>
+                <md-button class="md-primary md-raised" ng-click="goImageCropResult()" ng-show="artistImageCropShow">
+                    Crop
                 </md-button>
                 <md-button ng-click="artistImage=true; artistTheme=false" ng-show="artistTheme">
                     Next
