@@ -1,6 +1,6 @@
 <section layout="column">
     <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
-        <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" height="150" width="150"/>
+        <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="150" width="150"/>
         <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="150" width="150"/>
     </div>
     <div layout="row" flex>
