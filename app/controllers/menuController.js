@@ -21,6 +21,9 @@ sprwApp.controller('menuController', function($scope, $state, playlistServices){
             $scope.results = data.artists;
         })
     };
+    $scope.goArtist = function(artistId){
+       $state.go("player.artistProfile", {id:artistId});
+    };
     $scope.goDiscover = function(){
         $state.go("player.discover");
     };

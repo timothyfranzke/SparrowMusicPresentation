@@ -33,26 +33,40 @@
                 </div>
                 <div layout="row" ng-show="artistThemeShow" class="slide">
                     <h3>Choose A Theme</h3>
-                    <md-select ng-model="selectedGenre" multiple="true">
-                        <md-option ng-value="opt" ng-repeat="theme in themes" ng-model="artist.theme">{{ genre.genre }}</md-option>
+                    <md-select ng-model="artist.theme">
+                        <md-option ng-value="theme.class" ng-repeat="theme in themes" ng-class="theme.class">{{theme.color }}</md-option>
                     </md-select>
                 </div>
-                <div layout="row" class="slide" ng-show="artistImageSelectShow">
-                    <md-button class="md-primary md-raised" flex="100">
-                        <label for="file-input">Choose Artist Image</label>
-                    </md-button>
-                    <input id="file-input" type="file" img-cropper-fileread image="cropper.sourceImage">
-                    <md-button class="md-raised" flex="100">
-                        Not Now
-                    </md-button>
+                <div layout="column" class="slide" ng-show="artistImageSelectShow">
+                        <md-button class="md-primary md-raised" flex="100">
+                            <label for="file-input">Choose Artist Image</label>
+                        </md-button>
+                        <input id="file-input" type="file" img-cropper-fileread image="cropper.sourceImage">
+                        <md-button class="md-raised" flex="100">
+                            Not Now
+                        </md-button>
                 </div>
                 <div layout="row" ng-show="artistImageCropShow" class="slide">
                     <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
                 </div>
-                <div layout="row" ng-show="artistImageCropResultShow" class="slide">
-                    <img ng-src="{{cropper.croppedImage}}" flex="66"/>
-                    <md-button class="md-primary md-raised" flex="grow" ng-click="goArtistImageCrop()">
+                <div layout="column" layout-align="center" ng-show="artistImageCropResultShow" class="slide">
+                    <img ng-src="{{cropper.croppedImage}}" flex="grow"/>
+                    <md-button class="md-primary md-raised" flex="100" ng-click="goArtistFinalize()">
+                        Accept
+                    </md-button>
+                    <md-button class="md-raised" flex="grow" ng-click="goArtistImageCrop()">
                         Re-Do
+                    </md-button>
+                </div>
+                <div layout="column" layout-align="center" ng-show="artistFinalizeShow" class="slide">
+                    <div layout="row" layout-align="center" class="{{artist.theme}}" class="hue">
+                        <img ng-src="{{cropper.croppedImage}}" class="artist-profile-img" />
+                    </div>
+                    <div layout="row" layout-align="center" class="artist-header">
+                        <h3>{{artist.name}}</h3>
+                    </div>
+                    <md-button class="md-primary md-raised" flex="100">
+                        Create Artist
                     </md-button>
                 </div>
             </md-dialog-content>

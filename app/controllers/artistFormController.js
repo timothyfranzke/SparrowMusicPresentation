@@ -1,5 +1,6 @@
 sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, artistService, authServices){
     var userData = authServices.getUserData();
+    $scope.artist = {};
     $scope.artistNameShow = true;
     $scope.artistThemeShow = false;
     $scope.artistImageSelectShow = false;
@@ -65,6 +66,7 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         $scope.artistFinalizeShow = false;
     }
     $scope.goArtistFinalize = function(){
+        console.log($scope);
         $scope.artistNameShow = false;
         $scope.artistThemeShow = false;
         $scope.artistImageSelectShow = false;
@@ -84,15 +86,20 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
 
     };
     //
-    //$scope.$watch('cropper.sourceImage', function(newVal){
-    //    $scope.artistNameShow = false;
-    //    $scope.artistThemeShow = false;
-    //    $scope.artistImageSelectShow = false;
-    //    $scope.artistImageCropShow = true;
-    //    $scope.artistNoImageConfirmShow = false;
-    //    $scope.artistImageCropResultShow = false;
-    //    $scope.artistFinalizeShow = false;
-    //})
+    $scope.$watch('cropper.sourceImage', function(newVal, oldVal){
+        console.log("new val" + newVal);
+        console.log("old val" + oldVal);
+        if (newVal != undefined)
+        {
+            $scope.artistNameShow = false;
+            $scope.artistThemeShow = false;
+            $scope.artistImageSelectShow = false;
+            $scope.artistImageCropShow = true;
+            $scope.artistNoImageConfirmShow = false;
+            $scope.artistImageCropResultShow = false;
+            $scope.artistFinalizeShow = false;
+        }
+    });
 
     $scope.hide = function() {
         $mdDialog.hide();

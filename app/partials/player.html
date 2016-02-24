@@ -4,7 +4,14 @@
             <h1 class="md-toolbar-tools">sparrow.</h1>
         </md-toolbar>
         <md-content layout="column" layout-padding ng-controller="menuController as cntrl">
-            <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)"></md-autocomplete>
+            <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)">
+                <md-item-template>
+                    <span md-highlight-text="searchTerm" ng-click="goArtist(result.artistId)">{{result.artistName}}</span>
+                </md-item-template>
+                <md-not-found>
+                    No matches found.
+                </md-not-found>
+            </md-autocomplete>
             <md-button ng-click="goDiscover()" class="md-primary">
                 Discover
             </md-button>
@@ -49,7 +56,7 @@
             <md-icon class="material-icons md-18" ng-class="md-18" ng-click="player.next()">fast_forward</md-icon>
         </div>
         <div class="column" flex="33" class="btn-filter">
-            <md-button class="md-fab" aria-label="Eat cake"  ng-click="showFilterBottom()">
+            <md-button class="md-fab" aria-label="Eat cake"  ng-click="showFilterBottom()" style="bottom:25px;">
                 <md-icon md-svg-src="img/svg/filter18.svg" ></md-icon>
             </md-button>
         </div>
