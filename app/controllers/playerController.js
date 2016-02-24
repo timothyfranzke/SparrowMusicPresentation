@@ -264,7 +264,6 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     artistService.getCommonData().then(function(data){
         $scope.common = data;
         $scope.common.steps = (data.max / 20);
-        console.log("common: " + JSON.stringify($scope.common));
         data.genres.forEach(function(genre){
             genre.selected = true;
             $scope.player.currentFilter.genres.push(genre);
