@@ -7,18 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+
     <link rel="stylesheet" href="css/Supernice.css"/>
-    <link rel="stylesheet" href="css/styles.css"/>
+
     <link rel="stylesheet" href="css/bootstrapforms.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="css/FormStyles.css">
     <link rel="stylesheet" href="bower_components/angular-cropme/cropme.css">
+
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="css/jquery.mmenu.all.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="css/styles.css"/>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.mmenu.all.min.js"></script>
@@ -46,15 +49,11 @@
 
 </head>
 
-<body ng-app="sprwApp" style="background-color: #363845">
-    <section>
-        <ui-view></ui-view>
-    </section>
-<br/>
-<div class="overlay" ng-show="loading">
-    <div class="loader"><i class="fa fa-spinner fa-spin"></i>
-    <br/>{{message}}</div>
-</div>
+<body ng-app="sprwApp">
+    <ui-view></ui-view>
+    <div class="overlay" ng-show="loading" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate" md-diameter="90"></md-progress-circular>
+    </div>
 
 <script src="app/directives/fileModelDirective.js"></script>
 <script src="app/directives/modalDirective.js"></script>
