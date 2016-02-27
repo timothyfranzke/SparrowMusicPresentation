@@ -1,24 +1,32 @@
-<div class="section">
-    <div class="row text-center">
-        <img src="img/logo-white-lg.png" alt="sparrow music"/>
-    </div>
-    <div class="row text-center" style="color:white; font-size: x-large">
-        Sparrow Music.
-    </div>
-</div>
-<p ng-show="showFailedMessage" style="color:red;">Invalid email/password</p>
-<div class="modal-dialog">
-    <div class="loginmodal-container">
-        <form class="form-group">
-            <input type="text" ng-model="creds.email" placeholder="Email"/>
-            <input type="password" ng-model="creds.password" placeholder="Password"/>
-                <label>remember me</label>
-            <input type="checkbox" ng-model="creds.rememberMe"/><br/>
-            <input type="submit" class="login loginmodal-submit" ng-click="login(creds)" value="Login" ng-focus=""/>
-        </form>
-        <div class="login-help">
-            <a class="edit text-white" ui-sref="register">register</a><br/>
-            <a class="edit text-white" ui-sref="forgotPassword">forgot my password</a>
+<md-content layout-align="center center" layout-padding>
+    <div layout="row" layout-align="center">
+        <div layout="column" layout-align="center">
+            <img src="img/logo-white-lg.png" height="50" width="50"/>
+            <div layout="row" layout-align="center">
+                <h2 style="color:white">sparrow.</h2>
+            </div>
         </div>
     </div>
-</div>
+    <div layout="row" layout-align="center" class="md-inline-form" flex >
+        <div layout="column" flex-gt-md="33" flex="40" class=" album-section" layout-padding>
+            <md-input-container class="md-block">
+                <label>Email</label>
+                <input ng-model="creds.email">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Password</label>
+                <input ng-model="creds.password" type="password">
+            </md-input-container>
+            <md-button ng-click="login(creds)" class="md-raised md-primary">Login</md-button>
+            <div flex-xs flex="50">
+                <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+                    Checkbox 1: {{ data.cb1 }}
+                </md-checkbox>
+            </div>
+            <a class="login-help edit text-white" ui-sref="register">register</a>
+            <a class="login-help edit text-white" ui-sref="forgotPassword">forgot my password</a>
+        </div>
+
+    </div>
+</md-content>
+<!--style="background-color: #363845"-->
