@@ -31,7 +31,7 @@
                         </div>
                     </md-input-container>
                 </div>
-                <div layout="row" ng-show="artistThemeShow" class="slide">
+                <div layout="column" ng-show="artistThemeShow" class="slide">
                     <h3>Choose A Theme</h3>
                     <md-select ng-model="artist.theme">
                         <md-option ng-value="theme.class" ng-repeat="theme in themes" ng-class="theme.class">{{theme.color }}</md-option>

@@ -1,0 +1,87 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Create Album</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog">close</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content flex layout-padding>
+    <div layout="column" layout-padding class="slide" ng-show="albumNameShow">
+        <md-input-container>
+            <label>Album Name</label>
+            <input ng-model="album.albumName" type="text">
+        </md-input-container>
+        <md-datepicker ng-model="album.releaseDate" md-placeholder="Release Date"></md-datepicker>
+    </div>
+    <div layout="column" class="slide" ng-show="albumImageSelectShow">
+        <md-button class="md-primary md-raised" flex="100">
+            <label for="file-input">Choose Album Image</label>
+        </md-button>
+        <input id="file-input" type="file" img-cropper-fileread image="cropper.sourceImage">
+    </div>
+    <div layout="row" ng-show="albumImageCropShow" class="slide" layout-align="center">
+        <canvas ng-show="$mdMedia('gt-md')" width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="album.image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+        <canvas ng-show="!$mdMedia('gt-md')" width="300" height="200" image-cropper image="cropper.sourceImage" cropped-image="album.image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+    </div>
+    <div layout="column" layout-align="center" ng-show="albumImageCropResultShow" class="slide">
+        <img ng-src="{{album.image}}" flex="grow"/>
+    </div>ot
+    <div layout="column" class="slide" ng-show="albumTracksShow">
+        <div id="tracks">
+            <input type="file" nv-file-select="" uploader="uploader" multiple placeholder="+ add tracks" />
+            <div ng-show="uploader.queue.length > 0">
+
+                <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                <h2>Total tracks selected: {{ uploader.queue.length }}</h2>
+                <ul>
+                    <li ng-repeat="item in uploader.queue">
+                        <div>Name: <input type="text" ng-model="item.file.name"/></div>
+                        <div>Size: {{ item.file.size/1024/1024|number:2 }} Mb</div>
+                        <div ng-show="uploader.isHTML5">
+                            Progress: {{ item.progress }}
+                            <div class="item-progress-box">
+                                <div class="item-progress" ng-style="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <i ng-click="item.remove()" class="fa fa-trash-o clickable"></i>
+                        </div>
+                    </li>
+                    <div id="uploaderButtons" ng-show="uploader.queue.length > 0">
+                        <i class="fa fa-cloud-upload clickable" ng-click="uploadAll()"></i>
+                        <input type="button" ng-click="cancelCreate()" value="cancel"/>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</md-dialog-content>
+<md-dialog-actions layout="row">
+    <md-button ng-click="artistTheme=false; artistName=true" ng-show="artistTheme">
+        Prev
+    </md-button>
+    <md-button ng-click="goAlbumImageSelect()" ng-show="albumNameShow">
+        Next
+    </md-button>
+    <md-button ng-click="goAlbumName()" ng-show="albumImageSelectShow">
+        Prev
+    </md-button>
+    <md-button class="md-raised" flex="100" ng-click="goAlbumFinalize()" ng-show="albumImageSelectShow">
+        Not Now
+    </md-button>
+    <md-button ng-click="goAlbumImageSelect()" ng-show="albumImageCropShow">
+        Prev
+    </md-button>
+    <md-button class="md-primary md-raised" ng-click="goAlbumImageCropResult()" ng-show="albumImageCropShow">
+        Crop
+    </md-button>
+    <md-button class="md-raised" flex="grow" ng-click="goAlbumImageCrop()" ng-show="albumImageCropResultShow">
+        Re-Do
+    </md-button>
+    <md-button class="md-primary md-raised" flex="100" ng-click="createAlbum(album)" ng-show="albumImageCropResultShow">
+        Create Album
+    </md-button>
+
+</md-dialog-actions>

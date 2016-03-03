@@ -93,3 +93,8 @@ var imageBase = "https://sparrowmusic.blob.core.windows.net/images/";
 
 var audioBase = "https://sparrowmusic.blob.core.windows.net/tracks/";
 
+//template locations
+var baseDialogTemplate = "app/partials/templates/";
+var eventDialogTemplate = baseDialogTemplate + "events.html";
+var imageDialogTempalte = baseDialogTemplate + "imageCropper.html";
+var albumDialogTemplate = baseDialogTemplate + "album.html";

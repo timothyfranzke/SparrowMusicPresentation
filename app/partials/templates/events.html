@@ -1,0 +1,41 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Create Event</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content flex layout-padding layout="row">
+    <div layout="column">
+        <md-input-container>
+            <label>What is the event?</label>
+            <input ng-model="event.name" type="text">
+        </md-input-container>
+        <div>
+            <md-datepicker ng-model="event.eventDate" md-placeholder="When is the event?"></md-datepicker>
+        </div>
+
+        <md-input-container>
+            <label>Address</label>
+            <input ng-model="event.address" type="text">
+        </md-input-container>
+        <md-input-container>
+            <label>City</label>
+            <input ng-model="event.city" type="text">
+        </md-input-container>
+        <md-input-container>
+            <label>State</label>
+            <input ng-model="event.state" type="text" max="2" min="2">
+        </md-input-container>
+    </div>
+</md-dialog-content>
+<md-dialog-actions layout="row">
+    <md-button ng-click="create(event)">
+        Create
+    </md-button>
+    <md-button ng-click="cancel()">
+        Cancel
+    </md-button>
+</md-dialog-actions>

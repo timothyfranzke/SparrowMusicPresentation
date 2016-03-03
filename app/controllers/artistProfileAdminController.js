@@ -1,11 +1,19 @@
 /**
  * Created by Timothy on 11/24/2015.
  */
-sprwApp.controller('artistProfileAdminController', function($scope, $stateParams, $state, $uibModal, artistService, authServices, trackServices, FileUploader){
+sprwApp.controller('artistProfileAdminController', function($scope, $stateParams, $state, $mdDialog, artistService, authServices, trackServices, FileUploader){
 
     console.log("artistProfileAdmin controller");
     //variables
     var userData = {};
+    var dialogSettings = {
+        controller: 'dialogController',
+        templateUrl:'app/partials/templates/events.html',
+        parent: angular.element(document.body),
+        targetEvent: "",
+        clickOutsideToClose:true,
+        fullscreen: true
+    };
     userData = authServices.getUserData();
     console.log("userdata: " + JSON.stringify(userData));
     if (userData.token === undefined)
@@ -69,6 +77,9 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
             newAlbum.releaseDate = convertTDate(newAlbum.releaseDate);
             $scope.selectedArtist.albums.push(newAlbum);
             $scope.selectedAlbum = newAlbum;
+            if(album.image != undefined){
+                createAlbumImage(album.image);
+            }
         })
     };
 
@@ -196,21 +207,45 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
     $scope.animationsEnabled = true;
 
     $scope.openEvent = function (size) {
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'event.html',
-            controller: 'modalController',
-            size: size
-        });
-        modalInstance.result.then(function (event) {
-            console.log("creating event" + JSON.stringify(event));
-            createArtistEvent(event);
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+        $mdDialog.show({
+            controller: 'artistFormController',
+            templateUrl: 'app/partials/templates/artistForm/artistForm.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            fullscreen: true
+        })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+        $scope.$watch(function() {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
         });
     };
 
     $scope.openAlbum = function (modify) {
+        $mdDialog.show({
+            controller: 'albumDialogController',
+            templateUrl: 'app/partials/templates/artistForm/artistForm.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true,
+            fullscreen: true
+        })
+            .then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+        $scope.$watch(function() {
+            return $mdMedia('xs') || $mdMedia('sm');
+        }, function(wantsFullScreen) {
+            $scope.customFullscreen = (wantsFullScreen === true);
+        });
         console.log(modify);
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -313,7 +348,47 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
         $scope.isCreatingTrack = true;
     };
 
-    $scope.showCreateEvent = function(){
+    $scope.showCreateEvent = function(ev){
+        dialogSettings.templateUrl = eventDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        $mdDialog.show(dialogSettings)
+            .then(function(event) {
+                createArtistEvent(event);
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+        $scope.isCreatingEvent = true;
+    };
+
+    $scope.showCreateAlbum = function(ev){
+        dialogSettings.templateUrl = albumDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "albumDialogController";
+        dialogSettings.locals = {
+            album : {}
+        };
+        $mdDialog.show(dialogSettings)
+            .then(function(album) {
+                createAlbum(album);
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+        $scope.isCreatingEvent = true;
+    };
+
+    $scope.showUpdateAlbum = function(ev){
+        dialogSettings.templateUrl = albumDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "albumDialogController";
+        dialogSettings.locals = {
+            album : $scope.selectedAlbum
+        };
+        $mdDialog.show(dialogSettings)
+            .then(function(album) {
+                createAlbum(album);
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
         $scope.isCreatingEvent = true;
     };
 
