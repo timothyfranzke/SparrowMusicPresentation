@@ -13,19 +13,20 @@
     <!--div class="row" flex flex-offset="15" style="height:50px">
         <button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button>
     </div-->
-    <div layout="row" layout-align="center center" class="artist-header">
+    <div layout="row" layout-align="center center" class="artist-header" flex="100">
         <h1 flex>{{selectedArtist.artistName}}</h1>
     </div>
-    <md-content class="album-section" layout-align="center" layout-padding flex>
+    <md-content class="album-section md-whiteframe-3dp" layout-align="center" layout-padding flex>
         <div layout="row" layout-align="center center">
             <h2>Albums</h2>
             <md-button class="md-icon-button" aria-label="Location" ng-click="showCreateAlbum()">
                 <md-icon class="material-icons" ng-class="md-48">add</md-icon>
             </md-button>
         </div>
+        <md-divider></md-divider>
         <div layout="row" layout-align="center" class="albumSection"flex>
             <div layout="column" flex="100">
-                <div layout="row" layout-align="center center" class="md-whiteframe-2dp">
+                <div layout="row" layout-align="center center">
                     <div class="album-header">
                         {{selectedAlbum.albumName}}
                     </div>
@@ -33,17 +34,23 @@
                         <md-icon class="material-icons" ng-class="md-48">edit</md-icon>
                     </md-button>
                 </div>
-                <div layout="row" layout-align="center center">
+                <div layout="row" layout-lt-md="center" layout-align="center center" layout-padding>
                     <div layout="column">
-                        <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img md-whiteframe-2dp" height="200" width="200"/>
+                        <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
                     </div>
-                    <div class="track-listing" layout-align="center">
-                        <ul style="list-style: none; padding:0px">
-                            <li ng-repeat="item in selectedAlbum.tracks">
-                                <span ng-click="play($index)" >{{$index + 1}} {{item.trackName}}</span>
-                            </li>
-                        </ul>
+                    <div layout="column">
+                        <md-list>
+                            <md-list-item ng-repeat="track in selectedAlbum.tracks">
+                                <div class="md-list-item-text" layout-align="center center" layout="row">
+                                    <h4 ng-click="play($index)">{{$index + 1}}. {{track.trackName}}</h4>
+                                    <md-button class="md-icon-button" aria-label="Location" ng-click="showDeleteTrack($event,$index, track.trackId)">
+                                        <md-icon class="material-icons" ng-class="md-48">close</md-icon>
+                                    </md-button>
+                                </div>
+                            </md-list-item>
+                        </md-list>
                     </div>
+
                 </div>
 
             </div>

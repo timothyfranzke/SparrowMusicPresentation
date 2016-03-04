@@ -1,7 +1,7 @@
 /**
  * Created by Timothy on 11/24/2015.
  */
-sprwApp.controller('artistProfileAdminController', function($scope, $stateParams, $state, $mdDialog, artistService, authServices, trackServices, FileUploader){
+sprwApp.controller('artistProfileAdminController', function($scope, $stateParams, $state, $mdDialog, $mdToast, artistService, authServices, trackServices, FileUploader){
 
     console.log("artistProfileAdmin controller");
     //variables
@@ -144,6 +144,22 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
             $scope.selectedArtist.hasImage = true;
             $scope.selectedArtist.imageURL = imageBase + $stateParams.id + "/0.jpg?" + time;
         });
+    };
+
+    var deleteTrack = function(index, trackId){
+        artistService.deleteTrack($scope.selectedArtist.artistId, trackId, userData.userEmail, userData.token).then(function(data){
+            $scope.selectedAlbum.tracks.splice(index, 1);
+            showToast("Track has been deleted");
+        });
+    };
+
+    var showToast = function(message) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .position("top right")
+                .hideDelay(3000)
+        );
     };
     // FILTERS
 
@@ -392,6 +408,22 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
         $scope.isCreatingEvent = true;
     };
 
+    $scope.showDeleteTrack = function(ev, index, trackId){
+        alert("TrackkID: " + JSON.stringify($scope.selectedAlbum));
+        dialogSettings.templateUrl = confirmDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "confirmDialogController";
+        dialogSettings.locals = {
+            action : deleteAction,
+            object : trackObject
+        };
+        $mdDialog.show(dialogSettings)
+            .then(function() {
+                deleteTrack(index, trackId);
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
     $scope.$watch("selectedGenre", function(newVal, oldVal){
         if(newVal !== undefined){
             var genreModel = {
