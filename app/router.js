@@ -31,6 +31,9 @@ sprwApp.config(function($urlRouterProvider, $stateProvider, $locationProvider){
             resolve: {
                 playlist: function(playlistServices) {
                     return playlistServices.getDiscoverPlaylist();
+                },
+                artists: function(artistService, authServices){
+                    return artistService.getAssociatedArtists(authServices.getUserData().userEmail, authServices.getUserData().token);
                 }
             }
         })

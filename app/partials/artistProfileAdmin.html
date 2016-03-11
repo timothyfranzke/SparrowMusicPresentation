@@ -2,7 +2,7 @@
     <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
         <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="150" width="150"/>
         <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="150" width="150"/>
-        <md-button class="md-icon-button artist-profile-img-edit" aria-label="Location" ng-click="openArtistImage()">
+        <md-button class="md-icon-button artist-profile-img-edit" aria-label="Location" ng-click="showEditImage($event, 'ARTIST')">
             <md-icon class="material-icons" ng-class="md-48">edit</md-icon>
         </md-button>
     </div>
@@ -39,7 +39,14 @@
                         <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
                     </div>
                     <div layout="column">
+                        <div layout="row" layout-align="center center">
+                            <h3>Track Listing</h3>
+                            <md-button class="md-icon-button" aria-label="Location" ng-click="showCreateTrack()">
+                                <md-icon class="material-icons" ng-class="md-48">add</md-icon>
+                            </md-button>
+                        </div>
                         <md-list>
+                            <md-list-item ng-show="selectedAlbum.tracks.length==0"><em>there are currently no tracks associated with this album</em></md-list-item>
                             <md-list-item ng-repeat="track in selectedAlbum.tracks">
                                 <div class="md-list-item-text" layout-align="center center" layout="row">
                                     <h4 ng-click="play($index)">{{$index + 1}}. {{track.trackName}}</h4>
@@ -50,11 +57,11 @@
                             </md-list-item>
                         </md-list>
                     </div>
-
                 </div>
-
             </div>
         </div>
+    </md-content>
+   <md-content class="album-section md-whiteframe-3dp" layout-align="space-around">
         <div layout="row" layout-align="space-around">
             <img ng-repeat="album in selectedArtist.albums" class="albumSection clickable"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="75" width="75"/>
         </div>

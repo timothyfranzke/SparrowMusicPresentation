@@ -17,7 +17,7 @@
         <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
             <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
         </md-button>
-        <md-slider ng-model="player.currentFilter.max" ng-change="player.filterPlaylist()" flex min="0" max="255" min="{{common.min}}" max="{{common.max}}" aria-label="popularity" id="popularity-slider" class>
+        <md-slider ng-model="player.currentFilter.popularity" ng-change="player.filterPlaylist()" round="4" step=".04" min="0" max="1" aria-label="popularity" id="popularity-slider" class>
         </md-slider>
         <h4>Very Popular</h4>
     </div>

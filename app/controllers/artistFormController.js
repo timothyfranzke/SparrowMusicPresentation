@@ -86,7 +86,7 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
 
     };
     //
-    $scope.$watch('cropper.sourceImage', function(newVal, oldVal){
+    $scope.$watch('artist.image', function(newVal, oldVal){
         console.log("new val" + newVal);
         console.log("old val" + oldVal);
         if (newVal != undefined)
@@ -101,8 +101,8 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         }
     });
 
-    $scope.hide = function() {
-        $mdDialog.hide();
+    $scope.createArtist = function(artist) {
+        $mdDialog.hide(artist);
     };
     $scope.cancel = function() {
         $mdDialog.cancel();

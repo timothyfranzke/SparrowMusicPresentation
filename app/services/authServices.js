@@ -19,13 +19,10 @@ sprwApp.factory('authServices',function(baseService, $cookies){
             return baseService.POST(forgotPassword, emailData);
         },
         getUserData: function(){
-            console.log("get user data: " + JSON.stringify(userData));
             if (userData.token === undefined)
             {
                 userData = $cookies.getObject('user_info');
-                console.log("cookie data: "  + JSON.stringify(userData));
             }
-
             return userData;
         },
         setUserData: function(email, token){

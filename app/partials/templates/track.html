@@ -1,0 +1,83 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Add Tracks to {{album}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog">close</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content flex layout-padding>
+    <div layout="column" class="slide" ng-show="trackSelectShow">
+        <md-button class="md-primary md-raised" flex="100">
+            <label for="file-input">Choose Track File(s)</label>
+        </md-button>
+        <input id="file-input" type="file" nv-file-select="" uploader="uploader" multiple/>
+    </div>
+    <div layout="column" class="slide" ng-show="trackUploadShow">
+        <md-list>
+            <md-list-item ng-repeat="item in uploader.queue">
+                <div layout="row">
+                    <md-input-container>
+                        <label>Track Name</label>
+                        <input ng-model="item.file.name" type="text">
+                    </md-input-container>
+                    <md-button class="md-icon-button" aria-label="Location" ng-click="uploader.removeFromQueue(item)">
+                        <md-icon class="material-icons" ng-class="md-48">close</md-icon>
+                    </md-button>
+                </div>
+                <md-progress-linear md-mode="determinate" value="{{item.progress}}" ng-show="item.isUploading"></md-progress-linear>
+            </md-list-item>
+        </md-list>
+    </div>
+    <div layout="column" class="slide" ng-show="trackConfirmShow">
+        <h2>Tracks Successfully Created</h2>
+    </div>
+</md-dialog-content>
+<md-dialog-actions layout="row">
+    <md-button ng-click="goTrackSelect()" ng-show="trackUploadShow">
+        Prev
+    </md-button>
+    <md-button ng-click="uploadAll()" ng-show="trackUploadShow">
+        Upload All
+    </md-button>
+    <md-button ng-click="goTrackSelect()" ng-show="trackConfirmShow">
+        Add More Tracks
+    </md-button>
+    <md-button class="md-primary md-raised" flex="100" ng-click="close()" ng-show="trackConfirmShow">
+        Finished
+    </md-button>
+</md-dialog-actions>
+<!--div id="tracks">
+    <input type="file" nv-file-select="" uploader="uploader" multiple placeholder="+ add tracks" />
+    <div ng-show="uploader.queue.length > 0">
+
+        <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+        <!--h2>Total tracks selected: {{ uploader.queue.length }}</h2-->
+        <!--ul>
+            <li ng-repeat="item in uploader.queue">
+
+                <div ng-show="uploader.isHTML5">
+                    <div class="item-progress-box">
+                        <div class="item-progress" ng-style="{ 'width': item.progress + '%' }"></div>
+
+                    </div>
+                </div>
+                <md-button class="md-icon-button" aria-label="Location" ng-click="item.remove()">
+                    <md-icon class="material-icons" ng-class="md-48">close</md-icon>
+                </md-button>
+            </li>
+            <div id="uploaderButtons" ng-show="uploader.queue.length > 0">
+                <i class="fa fa-cloud-upload clickable" ng-click="uploadAll()"></i>
+                <input type="button" ng-click="cancelCreate()" value="cancel"/>
+            </div>
+
+        </ul>
+    </div>
+    <span class="subheader">Track Listing</span>
+    <ul>
+        <li ng-repeat="item in selectedAlbum.tracks">
+            <span ng-click="play(item.trackId)">{{item.trackName}}</span> <span class="edit" ng-click="deleteTrack(item, $index)">x remove</span>
+        </li>
+    </ul>
+</div-->

@@ -1,7 +1,15 @@
 /**
  * Created by Timothy.Franzke on 1/6/2016.
  */
-sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $mdBottomSheet, $mdToast, $mdSidenav, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, playlist){
+sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, playlist, artists){
+    if(artists.length > 0)
+    {
+        $scope.hasAssociatedArtists = true;
+        $scope.associatedArtists = artists;
+        console.log("setting artists");
+    }
+
+
     function debounce(func, wait, context) {
         var timer;
         return function debounced() {
@@ -270,8 +278,10 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         });
         $scope.player.currentFilter.min = data.min;
         $scope.player.currentFilter.max = data.max;
+        $scope.player.currentFilter.popularity = data.max;
         $scope.player.currentFilter.startDate = convertTDate(data.startDate);
         $scope.player.currentFilter.endDate = convertTDate(data.endDate);
 
+        //console.log($scope);
     });
 });

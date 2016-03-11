@@ -18,7 +18,7 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Postal Code</label>
-                        <input name="postalCode" ng-model="user.postalCode"
+                        <input name="postalCode" ng-model="artist.postalCode"
                                required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
                         <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
                             <div ng-message="required" class="my-message">You must supply a postal code.</div>
@@ -47,10 +47,11 @@
                         </md-button>
                 </div>
                 <div layout="row" ng-show="artistImageCropShow" class="slide">
-                    <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                    <canvas ng-show="$mdMedia('gt-md')" width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="artist.image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+                    <canvas ng-show="!$mdMedia('gt-md')" width="300" height="200" image-cropper image="cropper.sourceImage" cropped-image="artist.image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
                 </div>
                 <div layout="column" layout-align="center" ng-show="artistImageCropResultShow" class="slide">
-                    <img ng-src="{{cropper.croppedImage}}" flex="grow"/>
+                    <img ng-src="{{artist.image}}" flex="grow"/>
                     <md-button class="md-primary md-raised" flex="100" ng-click="goArtistFinalize()">
                         Accept
                     </md-button>
@@ -60,12 +61,12 @@
                 </div>
                 <div layout="column" layout-align="center" ng-show="artistFinalizeShow" class="slide">
                     <div layout="row" layout-align="center" class="{{artist.theme}}" class="hue">
-                        <img ng-src="{{cropper.croppedImage}}" class="artist-profile-img" />
+                        <img ng-src="{{artist.image}}" class="artist-profile-img" />
                     </div>
                     <div layout="row" layout-align="center" class="artist-header">
                         <h3>{{artist.name}}</h3>
                     </div>
-                    <md-button class="md-primary md-raised" flex="100">
+                    <md-button class="md-primary md-raised" flex="100" ng-click="createArtist(artist)">
                         Create Artist
                     </md-button>
                 </div>

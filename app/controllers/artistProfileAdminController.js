@@ -407,9 +407,44 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
             });
         $scope.isCreatingEvent = true;
     };
-
+    $scope.showEditImage = function(ev, type){
+        dialogSettings.templateUrl = imageDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "imageController";
+        dialogSettings.locals = {
+            trackingId : $scope.selectedArtist.artistId
+        };
+        $mdDialog.show(dialogSettings)
+            .then(function(img) {
+                if (type == "ARTIST")
+                {
+                    createArtistImage(img);
+                }
+                else{
+                    createAlbumImage(img);
+                }
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
+    $scope.showCreateTrack = function(ev, index, trackId){
+        dialogSettings.templateUrl = trackDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "trackController";
+        dialogSettings.locals = {
+            album : $scope.selectedAlbum,
+            artistId : $scope.selectedArtist.artistId
+        };
+        $mdDialog.show(dialogSettings)
+            .then(function(tracks) {
+                tracks.forEach(function(track){
+                    $scope.selectedAlbum.tracks.push(track);
+                })
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
     $scope.showDeleteTrack = function(ev, index, trackId){
-        alert("TrackkID: " + JSON.stringify($scope.selectedAlbum));
         dialogSettings.templateUrl = confirmDialogTemplate;
         dialogSettings.targetEvent = ev;
         dialogSettings.controller = "confirmDialogController";

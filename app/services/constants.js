@@ -98,7 +98,9 @@ var baseDialogTemplate = "app/partials/templates/";
 var eventDialogTemplate = baseDialogTemplate + "events.html";
 var imageDialogTempalte = baseDialogTemplate + "imageCropper.html";
 var albumDialogTemplate = baseDialogTemplate + "album.html";
+var trackDialogTemplate = baseDialogTemplate + "track.html";
 var confirmDialogTemplate = baseDialogTemplate + "confirm.html";
+var imageDialogTemplate = baseDialogTemplate + "imageCropper.html";
 
 //actions
 var deleteAction = "delete";

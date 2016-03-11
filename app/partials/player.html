@@ -4,7 +4,7 @@
             <h1 class="md-toolbar-tools">sparrow.</h1>
         </md-toolbar>
         <md-content layout="column" layout-padding ng-controller="menuController as cntrl">
-            <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)">
+            <md-autocomplete md-items="result in results" md-item-text="result.artistName" md-no-cache="false" md-search-text="searchTerm" md-search-text-change="search(searchTerm)" placeholder="Search Artists">
                 <md-item-template>
                     <span md-highlight-text="searchTerm" ng-click="goArtist(result.artistId)">{{result.artistName}}</span>
                 </md-item-template>
@@ -18,9 +18,12 @@
             <md-button ng-click="goEvents()" class="md-primary">
                 Events
             </md-button>
-            <md-button ng-click="goMyMusic()" class="md-primary">
-                My Music
+            <md-button ng-click="showAdvanced($event)" class="md-primary">
+                Create An Artist
             </md-button>
+            <md-select ng-model="selectedArtistId" placeholder="My Artists">
+                <md-option ng-value="artist.artistId" ng-repeat="artist in associatedArtists" ng-class="theme.class">{{artist.artistName }}</md-option>
+            </md-select>
         </md-content>
     </md-sidenav>
     <md-content flex layout="column" md-swipe-right="toggleLeft()">

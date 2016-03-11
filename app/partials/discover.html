@@ -22,8 +22,8 @@
                           ng-class="item.setting.theme.bg" >
                 <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="75px" height="75px" flex="initial"/>
                 <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="75px" height="75px" flex="initial"/>
-                <md-grid-tile-footer>
-                    <a ui-sref="player.artistProfile({id: item.artistId})">{{item.artistName}}</a>
+                <md-grid-tile-footer layout-align="center center">
+                    <a ui-sref="player.artistProfile({id: item.artistId})" class="textWhite">{{item.artistName}}</a>
                 </md-grid-tile-footer>
             </md-grid-tile>
     </div>

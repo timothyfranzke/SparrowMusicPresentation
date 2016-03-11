@@ -8,18 +8,31 @@
     </div>
 </md-toolbar>
 <md-dialog-content flex layout-padding>
-    <div layout="column" class="slide">
-        <input type="file" class="btn" img-cropper-fileread image="cropper.sourceImage" />
-        <div>
-            <canvas width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
-        </div>
-        </div>
+    <div layout="column" class="slide" ng-show="imageSelectShow">
+        <md-button class="md-primary md-raised" flex="100">
+            <label for="file-input">Choose Album Image</label>
+        </md-button>
+        <input id="file-input" type="file" img-cropper-fileread image="cropper.sourceImage">
+    </div>
+    <div layout="row" ng-show="imageCropShow" class="slide" layout-align="center">
+        <canvas ng-show="$mdMedia('gt-md')" width="500" height="300" image-cropper image="cropper.sourceImage" cropped-image="image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+        <canvas ng-show="!$mdMedia('gt-md')" width="300" height="200" image-cropper image="cropper.sourceImage" cropped-image="image" crop-width="400" crop-height="400" keep-aspect="true" touch-radius="30" crop-area-bounds="bounds"></canvas>
+    </div>
+    <div layout="column" layout-align="center" ng-show="imageCropResultShow" class="slide">
+        <img ng-src="{{image}}" flex="grow"/>
+    </div>
 </md-dialog-content>
 <md-dialog-actions>
-    <md-button ng-click="create(cropper.croppedImage)">
-        Update
+    <md-button ng-click="goImageSelect" ng-show="imageCropShow">
+        Prev
     </md-button>
-    <md-button ng-click="cancel()">
-        Cancel
+    <md-button ng-click="goImageCropResult()" ng-show="imageCropShow">
+        Crop
+    </md-button>
+    <md-button ng-click="goImageSelect" ng-show="imageCropResultShow">
+        ReDo
+    </md-button>
+    <md-button ng-click="createImage(image)" ng-show="imageCropResultShow">
+        Update
     </md-button>
 </md-dialog-actions>
