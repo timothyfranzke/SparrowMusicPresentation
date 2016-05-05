@@ -1,15 +1,59 @@
 /**
  * Created by Timothy.Franzke on 1/6/2016.
  */
-sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, playlist, artists){
+sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $stateParams, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, metaData, artists){
+    var artistId = -1;
+    $scope.$on('$stateChangeSuccess',
+        function(event, toState, toParams, fromState, fromParams) {
+            console.log("currentstate: " + JSON.stringify($stateParams));
+            console.log("toParams: " + JSON.stringify(toParams));
+            console.log("fromParams: " + JSON.stringify(fromParams));
+            console.log("scope");
+            console.log($scope);
+            switch($state.current.name){
+                case 'player.artistProfile':
+                    var isLiked = false;
+                    artistId = toParams.id;
+                    for(var i in $scope.followed.artistIds)
+                    {
+                        if (parseInt(toParams.id) === parseInt($scope.followed.artistIds[i]))
+                        {
+
+                            isLiked = true;
+                            break;
+                        }
+                    }
+                    //console.log("followed: " + $scope.followed.artistIds.indexOf(toParams.id));
+                    if (isLiked)
+                    {
+                        $scope.statePlayer = false;
+                        $scope.stateArtistFavorite = false;
+                        $scope.stateArtistUnFavorite = true;
+                    }
+                    else{
+                        $scope.statePlayer = false;
+                        $scope.stateArtistFavorite = true;
+                        $scope.stateArtistUnFavorite = false;
+                    }
+
+                    break;
+                default :
+                    $scope.statePlayer = true;
+                    $scope.stateArtistFavorite = false;
+                    $scope.stateArtistUnFavorite = false;
+                    break;
+            }
+        }
+    );
+    $scope.statePlayer = true;
+    $scope.stateArtistFavorite = false;
+    $scope.stateArtistUnFavorite = false;
     if(artists.length > 0)
     {
         $scope.hasAssociatedArtists = true;
         $scope.associatedArtists = artists;
         console.log("setting artists");
     }
-
-
     function debounce(func, wait, context) {
         var timer;
         return function debounced() {
@@ -68,18 +112,13 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         discover.selected = false;
         mymusic.selected = false;
     };
-
     $scope.follwed = userDataServices.followed;
     $scope.loading = false;
     $scope.player = playerService;
-    playlist.forEach(function(item){
-        item.setting = JSON.parse(item.setting);
-    });
-    $scope.player.playlist = playlist;
-    $scope.player.ogPlaylist = playlist;
-    $scope.player.current = playlist[0];
-    $scope.player.play(playlist[0]);
-    //$scope.currentTime = $scope.player.currentTime();
+    $scope.playlist = playlistServices;
+    $scope.playlist.playlistId = metaData.playlistID;
+    $scope.playlist.pages = metaData.totalPages;
+
     $scope.common = {};
     $scope.genreShow = false;
     $scope.locationShow = false;
@@ -90,7 +129,6 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     $scope.saveFilterFormShow = false;
     $scope.selectFilterShow = false;
     $scope.searched = false;
-
     $scope.results = [];
     $scope.windows = [];
     $scope.window = [];
@@ -249,7 +287,37 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
                 $state.go("player.createArtist");
                 break;
         }
-    }
+    };
+
+    $scope.followArtist = function(){
+
+        var model = {
+            userEmail: userData.userEmail,
+            token: userData.token,
+            artistId: artistId
+        };
+        userServices.followArtist(model).then(function(data){
+            $scope.statePlayer = false;
+            $scope.stateArtistFavorite = false;
+            $scope.stateArtistUnFavorite = true;
+            $scope.followed = data;
+        });
+    };
+
+    $scope.unFollowArtist = function(){
+        var model = {
+            userEmail: userData.userEmail,
+            token: userData.token,
+            artistId: artistId
+        };
+        userServices.unFollowArtist(model).then(function(data){
+            $scope.statePlayer = false;
+            $scope.stateArtistFavorite = true;
+            $scope.stateArtistUnFavorite = false;
+            $scope.followed = data;
+
+        });
+    };
 
     $scope.logout = function(){
         $cookies.remove("user_info");
@@ -274,14 +342,41 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.common.steps = (data.max / 20);
         data.genres.forEach(function(genre){
             genre.selected = true;
-            $scope.player.currentFilter.genres.push(genre);
+            $scope.playlist.currentFilter.genres.push(genre);
         });
-        $scope.player.currentFilter.min = data.min;
-        $scope.player.currentFilter.max = data.max;
-        $scope.player.currentFilter.popularity = data.max;
-        $scope.player.currentFilter.startDate = convertTDate(data.startDate);
-        $scope.player.currentFilter.endDate = convertTDate(data.endDate);
-
-        //console.log($scope);
+        $scope.playlist.currentFilter.min = data.min;
+        $scope.playlist.currentFilter.max = data.max;
+        $scope.playlist.currentFilter.popularity = data.max;
+        $scope.playlist.currentFilter.startDate = data.startDate;
+        console.log("data: " + JSON.stringify(data));
+        $scope.playlist.currentFilter.endDate = convertTDate(data.endDate);
+        $scope.playlist.ogFilter = JSON.parse(JSON.stringify($scope.playlist.currentFilter));
     });
+
+    var fillPlaylist = function(){
+        playlistServices.getDiscoverPlaylist().then(function(data){
+            data.forEach(function(item){
+               item.setting = JSON.parse(item.setting);
+                item.isVisible = true;
+            });
+            $scope.playlist.playlist.push.apply($scope.playlist.playlist, data);
+            $scope.player.current = $scope.playlist.playlist[0];
+
+            if (playlistServices.currentPage <= playlistServices.pages && playlistServices.currentPage < 4)
+                fillPlaylist();
+        })
+    };
+    $scope.nextPage = function(){
+       playlistServices.getDiscoverPlaylist().then(function(data){
+            data.forEach(function(item){
+                item.setting = JSON.parse(item.setting);
+                item.isVisible = true;
+            });
+            $scope.playlist.playlist.push.apply($scope.playlist.playlist, data);
+            $scope.playlist.filter();
+        })
+    };
+    fillPlaylist();
+
+
 });

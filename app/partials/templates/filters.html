@@ -1,4 +1,4 @@
-<md-bottom-sheet class="md-list md-has-header" ng-cloak height="100px">
+<md-bottom-sheet class="md-list md-has-header" id="filterFooter" ng-cloak height="100px">
     <md-list ng-show="!popularityShow && !genreShow && !releaseDateShow && !locationShow" layout="row" layout-align="center" class="slideInOut">
         <md-button class="md-icon-button" aria-label="Genres" ng-click="showGenres()">
             <md-icon class="material-icons" ng-class="md-48">headset</md-icon>
@@ -17,28 +17,31 @@
         <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
             <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
         </md-button>
-        <md-slider ng-model="player.currentFilter.popularity" ng-change="player.filterPlaylist()" round="4" step=".04" min="0" max="1" aria-label="popularity" id="popularity-slider" class>
+        <md-slider ng-model="playlist.currentFilter.popularity" ng-change="playlist.filter()" round="4" step=".04" min="0" max="1" aria-label="popularity" id="popularity-slider" class>
         </md-slider>
         <h4>Very Popular</h4>
     </div>
-    <div id="genreFilter" ng-show="genreShow" class="slideOutIn">
+    <div id="genreFilter" ng-show="genreShow" class="slideOutIn" layout="row" layout-align="center">
         <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
             <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
         </md-button>
         <md-input-container>
             <label>Select your genres</label>
             <md-select ng-model="selectedGenre" multiple="true">
-                <md-option ng-value="opt" ng-repeat="genre in player.currentFilter.genres" ng-click="selectGenre(genre.genreId)">{{ genre.genre }}</md-option>
+                <md-option ng-value="opt" ng-repeat="genre in filterDisplayGenres" ng-click="selectGenre(genre.genreId)">{{ genre.genre }}</md-option>
             </md-select>
         </md-input-container>
+        <md-button ng-click="resetFilter()">
+            reset
+        </md-button>
     </div>
     <div id="releaseDateFilter" ng-show="releaseDateShow" class="slideOutIn">
         <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
             <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
         </md-button>
         <label>Released On</label>
-        <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="player.filterPlaylist()"></md-datepicker>
-        <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="player.filterPlaylist()"></md-datepicker>
+        <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="filter.byReleaseDate()"></md-datepicker>
+        <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="filter.byReleaseDate()"></md-datepicker>
     </div>
     <div id="locationFilter" ng-show="locationShow" class="slideOutIn">
         <md-select ng-model="selectedDistance">

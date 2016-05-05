@@ -1,5 +1,6 @@
-sprwApp.controller('filterController', function($scope, playerService){
+sprwApp.controller('filterController', function($scope, playerService, playlistServices){
     $scope.player = playerService;
+    $scope.playlist = playlistServices;
     $scope.distances = [50,100,200,500,'Any'];
     $scope.selectedFilter = {};
     $scope.filterDisplayGenres = [];
@@ -23,7 +24,7 @@ sprwApp.controller('filterController', function($scope, playerService){
     };
     $scope.showGenres = function(){
         closeAllFilters();
-        $scope.player.currentFilter.genres.forEach(function(genre){
+        $scope.playlist.currentFilter.genres.forEach(function(genre){
             genre.selected = false;
             $scope.filterDisplayGenres.push(genre);
         });
@@ -53,11 +54,42 @@ sprwApp.controller('filterController', function($scope, playerService){
     $scope.hideSpecificFilter = function(){
         closeAllFilters();
     };
-    $scope.selectGenre = function(id)
+    $scope.selectGenre = function(id, playlist)
     {
-        $scope.player.currentFilter.genres[id].selected = true;
-        $scope.filterDisplayGenres.splice(id, 1);
-        console.log(JSON.stringify($scope.filterDisplayGenres));
-        $scope.player.filterPlaylist();
+        var i = 0;
+        var resetSelected = true;
+        $scope.playlist.currentFilter.genres.forEach(function(genre){
+            if(genre.selected === undefined)
+            {
+                resetSelected = false;
+            }
+            else {
+                if(!genre.selected)
+                    resetSelected = false;
+            }
+        });
+        if (resetSelected)
+        {
+            $scope.playlist.currentFilter.genres.forEach(function(genre){
+                genre.selected = false;
+            });
+        }
+        $scope.playlist.currentFilter.genres[id].selected = true;
+        $scope.filterDisplayGenres.forEach(function(item){
+            if (item.genreId === id){
+                $scope.filterDisplayGenres.splice(i, 1);
+            }
+            i++;
+        });
+        //console.log("current filter: " + JSON.stringify($scope.playlist.currentFilter));
+        $scope.playlist.filter();
+    };
+    $scope.resetFilter = function(){
+        $scope.filterDisplayGenres = [];
+        $scope.playlist.currentFilter.genres.forEach(function(genre){
+            genre.selected = true;
+            $scope.filterDisplayGenres.push(genre);
+        });
+        $scope.playlist.resetFilter();
     }
 });

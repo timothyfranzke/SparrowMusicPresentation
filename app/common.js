@@ -69,6 +69,14 @@ var themes = {
     }
 };
 
+var copyArray = function(arry1, arry2)
+{
+    console.log("copyArray : " + JSON.stringify(arry1));
+    arry1.forEach(function(item){
+        arry2.push(item);
+    });
+};
+
 $(function() {
     $('nav#menu').mmenu({
         extensions	: [ 'effect-slide-menu', 'pageshadow' ],

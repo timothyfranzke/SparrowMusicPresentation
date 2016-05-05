@@ -7,6 +7,7 @@ sprwApp.controller('authController', function($scope,$stateParams, $cookies, $st
        authServices.authUser(creds).then(function(data){
            authServices.setUserData(creds.email, data.token);
            $scope.$parent.loading = false;
+           
            $state.go('player.discover');
        }, function(status){
            $scope.$parent.loading = false;

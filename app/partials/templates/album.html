@@ -1,3 +1,4 @@
+<md-dialog style="width:50%;height:50%" layout-align="top center" layout="column">
 <md-toolbar>
     <div class="md-toolbar-tools">
         <h2>Create Album</h2>
@@ -7,8 +8,8 @@
         </md-button>
     </div>
 </md-toolbar>
-<md-dialog-content flex layout-padding>
-    <div layout="column" layout-padding class="slide" ng-show="albumNameShow">
+<md-dialog-content  layout-padding layout-align="center center" style="overflow:hidden; width:75%">
+    <div layout="column" class="slide" ng-show="albumNameShow">
         <md-input-container>
             <label>Album Name</label>
             <input ng-model="album.albumName" type="text">
@@ -85,3 +86,5 @@
     </md-button>
 
 </md-dialog-actions>
+
+</md-dialog>

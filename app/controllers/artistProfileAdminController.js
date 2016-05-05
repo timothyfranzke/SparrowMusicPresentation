@@ -157,8 +157,9 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
         $mdToast.show(
             $mdToast.simple()
                 .textContent(message)
-                .position("top right")
+                .position("bottom right")
                 .hideDelay(3000)
+
         );
     };
     // FILTERS

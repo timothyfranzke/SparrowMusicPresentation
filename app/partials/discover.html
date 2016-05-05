@@ -14,18 +14,24 @@
         <md-grid-list
                 md-cols="3" md-cols-sm="3" md-cols-md="5" md-cols-gt-md="7"
                 md-row-height-gt-md="1:1" md-row-height="1:1"
-                md-gutter="8px" md-gutter-gt-sm="4px" >
-            <md-grid-tile ng-repeat="item in player.playlist"
-                          md-rowspan="1"
-                          md-colspan="1"
-                          md-colspan-sm="1"
-                          ng-class="item.setting.theme.bg" >
-                <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="75px" height="75px" flex="initial"/>
-                <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="75px" height="75px" flex="initial"/>
-                <md-grid-tile-footer layout-align="center center">
-                    <a ui-sref="player.artistProfile({id: item.artistId})" class="textWhite">{{item.artistName}}</a>
-                </md-grid-tile-footer>
-            </md-grid-tile>
+                md-gutter="8px" md-gutter-gt-sm="4px" infinite-scroll="nextPage()">
+                <md-grid-tile ng-repeat="item in playlist.playlist"
+                              md-rowspan="1"
+                              md-colspan="1"
+                              md-colspan-sm="1"
+                              ng-class="item.setting.theme.bg" ng-if="item.isVisible">
+                    <span ng-hide="$mdMedia('gt-md')">
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="75px" height="75px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="75px" height="75px" flex="initial"/>
+                    </span>
+                    <span ng-show="$mdMedia('gt-md')">
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="125px" height="125px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="125px" height="125px" flex="initial"/>
+                    </span>
+                    <md-grid-tile-footer layout-align="center center">
+                        <a ui-sref="player.artistProfile({id: item.artistId})" class="textWhite">{{item.artistName}}</a>
+                    </md-grid-tile-footer>
+                </md-grid-tile>
     </div>
 
 <br/>

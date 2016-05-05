@@ -1,6 +1,8 @@
 sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, artistService, authServices){
     var userData = authServices.getUserData();
     $scope.artist = {};
+    $scope.artist.setting = {};
+    $scope.artist.setting.theme = {};
     $scope.artistNameShow = true;
     $scope.artistThemeShow = false;
     $scope.artistImageSelectShow = false;
@@ -9,12 +11,12 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
     $scope.artistImageCropResultShow = false;
     $scope.artistFinalizeShow = false;
 
-    $scope.themes = [
-        {color: "Red", class:"sparrow-red"},
-        {color: "Blue", class:"sparrow-blue"},
-        {color: "Yellow", class:"sparrow-yellow"},
-        {color: "Purple", class:"sparrow-purple"},
-    ]
+    var themes = $scope.themes = [
+        {color: "Red", theme: { "border" : redClass, "bg" : redClassBg, "img" : redImg }},
+        {color: "Blue", theme: { "border" : blueClass, "bg" : blueClassBg, "img" : blueImg }},
+        {color: "Yellow", theme:{ "border" : yellowClass, "bg" : yellowClassBg, "img" : yellowImg }},
+        {color: "Purple", theme:{ "border" : purpleClass, "bg" : purpleClassBg, "img" : purpleImg }}
+    ];
 
     if(userData.token === undefined || userData.userEmail === undefined) {
         $state.go("login");
@@ -28,8 +30,8 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         $scope.artistNoImageConfirmShow = true;
         $scope.artistImageCropResultShow = false;
         $scope.artistFinalizeShow = false;
-    }
-    $scope.goArtistImageSelect = function(){
+    };
+    var goArtistImageSelect = $scope.goArtistImageSelect = function(){
         $scope.artistNameShow = false;
         $scope.artistThemeShow = false;
         $scope.artistImageSelectShow = true;
@@ -66,6 +68,12 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         $scope.artistFinalizeShow = false;
     }
     $scope.goArtistFinalize = function(){
+        if($scope.artist.image == undefined){
+            $scope.artist.setting.hasImage = false;
+        }
+        else{
+            $scope.artist.setting.hasImage = true;
+        }
         console.log($scope);
         $scope.artistNameShow = false;
         $scope.artistThemeShow = false;
@@ -75,16 +83,16 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         $scope.artistImageCropResultShow = false;
         $scope.artistFinalizeShow = true;
     }
-    $scope.createArtist = function(artist){
-        $scope.isCreatingArtist = false;
-        artist.token = userData.token;
-        artist.userEmail = userData.userEmail;
-
-        artistService.createArtist(artist).then(function(data){
-            $state.go("mymusic",{id:data});
-        })
-
-    };
+    // $scope.createArtist = function(artist){
+    //     $scope.isCreatingArtist = false;
+    //     artist.token = userData.token;
+    //     artist.userEmail = userData.userEmail;
+    //
+    //     artistService.createArtist(artist).then(function(data){
+    //         $state.go("mymusic",{id:data});
+    //     })
+    //
+    // };
     //
     $scope.$watch('artist.image', function(newVal, oldVal){
         console.log("new val" + newVal);
@@ -101,7 +109,19 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
         }
     });
 
+    var setTheme = $scope.setTheme = function(theme){
+        $scope.artist.setting.theme = theme;
+        //console.log($scope);
+        goArtistImageSelect();
+    };
+    $scope.randomSelectTheme = function(){
+        var index = Math.floor((Math.random() * 4));
+        var selectedTheme = themes[index].theme;
+        setTheme(selectedTheme);
+    };
+
     $scope.createArtist = function(artist) {
+        console.log("artists: " + JSON.stringify(artist));
         $mdDialog.hide(artist);
     };
     $scope.cancel = function() {

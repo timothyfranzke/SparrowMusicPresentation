@@ -29,12 +29,14 @@ sprwApp.controller('trackController', function($scope, FileUploader, $mdDialog, 
 
     $scope.uploadAll = function(){
         uploader.queue.forEach(function(item){
+            console.log(item);
             item.url = base + "v1/api/Artist/CreateTrack?albumId=" + album.albumId + "&artistId=" + artistId + "&email=" + userData.userEmail + "&token=" + userData.token + "&trackName=" + item.file.name;
             item.upload();
         })
     };
 
     uploader.onSuccessItem = function(fileItem, response, status, headers) {
+
         console.info('onSuccessItem');
         var newTrack = {
             trackId:response,

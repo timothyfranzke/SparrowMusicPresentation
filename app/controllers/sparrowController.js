@@ -185,5 +185,6 @@ sprwApp.controller('sparrowController', function($scope, $timeout, authServices,
         player.filterPlaylist();
     });
 
-    console.log( $scope);
+    console.log("SPARROW: " );
+    console.log($scope);
 });

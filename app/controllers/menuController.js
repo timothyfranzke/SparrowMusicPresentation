@@ -2,12 +2,13 @@ sprwApp.controller('menuController', function($scope, $state,$mdDialog, $mdMedia
     var userData = authServices.getUserData();
 
     var createArtist = function(artistData){
-        console.log("create artist")
+        console.log("create artist");
         var artist = {};
         artist.token = userData.token;
         artist.userEmail = userData.userEmail;
         artist.name = artistData.name;
         artist.postalCode = artistData.postalCode;
+        artist.setting = JSON.stringify(artistData.setting);
 
         artistService.createArtist(artist).then(function(data){
             if (artistData.image !== undefined){

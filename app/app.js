@@ -1,1 +1,1 @@
-var sprwApp = angular.module('sprwApp', ['ui.router', 'ngCookies', 'ngMaterial', 'angular-img-cropper', 'angularFileUpload','ngMessages', 'ngAnimate', "cropme"]);
+var sprwApp = angular.module('sprwApp', ['ui.router', 'infinite-scroll', 'ngCookies', 'ngMaterial', 'angular-img-cropper', 'angularFileUpload','ngMessages', 'ngAnimate', "cropme"]);

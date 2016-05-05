@@ -3,10 +3,10 @@
         <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="150" width="150"/>
         <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="150" width="150"/>
     </div>
-    <div layout="row" flex>
+    <!--div layout="row" flex>
         <md-button ng-show="!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="followArtist()" class="md-raised">follow</md-button>
         <md-button ng-show="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="unFollowArtist()" class="md-raised">unfollow</md-button>
-    </div>
+    </div-->
     <!--div class="row" flex flex-offset="15" style="height:50px">
         <button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button>
     </div-->
