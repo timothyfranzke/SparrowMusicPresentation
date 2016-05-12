@@ -1,4 +1,4 @@
-<md-content layout-align="center center" layout-padding>
+<md-content layout-align="center center" layout-padding style="background-color:#6C3C56">
     <div layout="row" layout-align="center">
         <div layout="column" layout-align="center">
             <img src="img/logo-white-lg.png" height="50" width="50"/>
@@ -7,13 +7,13 @@
             </div>
         </div>
     </div>
-    <div layout="row" layout-align="center" class="md-inline-form" flex >
-        <div layout="column" flex-gt-md="33" flex="40" class=" album-section" layout-padding>
-            <md-input-container class="md-block">
+    <div layout="row" layout-align="center" >
+        <div layout="column" layout-padding md-whiteframe="2" style="width:500px;">
+            <md-input-container >
                 <label>Email</label>
                 <input ng-model="creds.email">
             </md-input-container>
-            <md-input-container class="md-block">
+            <md-input-container>
                 <label>Password</label>
                 <input ng-model="creds.password" type="password">
             </md-input-container>

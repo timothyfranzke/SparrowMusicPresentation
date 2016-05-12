@@ -24,6 +24,11 @@ sprwApp.config(function($urlRouterProvider, $stateProvider, $locationProvider){
             templateUrl: 'app/partials/resetPassword.html',
             controller:'authController'
         })
+        .state('player.artistProfileAdmin', {
+            url: '/mymusic/:id',
+            templateUrl: 'app/partials/artistProfile.html',
+            controller: 'artistProfileAdminController'
+        })
         .state('player', {
             abstract: true,
             templateUrl: 'app/partials/player.html',
@@ -94,12 +99,8 @@ sprwApp.config(function($urlRouterProvider, $stateProvider, $locationProvider){
             url: '/artist/:id',
             templateUrl: 'app/partials/artistProfile.html',
             controller: 'artistProfileController'
-        })
-        .state('player.artistProfileAdmin', {
-            url: '/mymusic/:id',
-            templateUrl: 'app/partials/artistProfileAdmin.html',
-            controller: 'artistProfileAdminController'
         });
+
     $urlRouterProvider.otherwise('login');
         // .state('cropper', {
         //     url: '/cropper',

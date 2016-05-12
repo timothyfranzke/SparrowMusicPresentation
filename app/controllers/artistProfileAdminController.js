@@ -2,7 +2,7 @@
  * Created by Timothy on 11/24/2015.
  */
 sprwApp.controller('artistProfileAdminController', function($scope, $stateParams, $state, $mdDialog, $mdToast, artistService, authServices, trackServices, FileUploader){
-
+    $scope.isAdmin = true;
     console.log("artistProfileAdmin controller");
     //variables
     var userData = {};

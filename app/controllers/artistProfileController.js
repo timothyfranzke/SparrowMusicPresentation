@@ -2,6 +2,7 @@
  * Created by Timothy on 12/1/2015.
  */
 sprwApp.controller('artistProfileController', function($scope, authServices, artistService, userServices, userDataServices, $stateParams){
+    $scope.isAdmin = false;
     var userData = {};
     $scope.settings = {};
 
@@ -44,6 +45,10 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
             artistId: $scope.selectedArtist.artistId
         };
         userServices.followArtist(model).then(function(data){
+            for (var item in data.events)
+            {
+                item.eventDate = convertTDate(item.eventDate);
+            }
             $scope.$parent.followed = data;
         });
     };
@@ -55,6 +60,10 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
             artistId: $scope.selectedArtist.artistId
         };
         userServices.unFollowArtist(model).then(function(data){
+            for (var item in data.events)
+            {
+                item.eventDate = convertTDate(item.eventDate);
+            }
             $scope.$parent.followed = data;
 
         });

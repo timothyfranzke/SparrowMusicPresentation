@@ -1,7 +1,10 @@
 <section layout="column">
     <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
-        <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="150" width="150"/>
-        <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="150" width="150"/>
+        <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="200" width="200"/>
+        <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="200" width="200"/>
+        <md-button class="md-icon-button artist-profile-img-edit" aria-label="Location" ng-click="showEditImage($event, 'ARTIST')" ng-show="isAdmin">
+            <md-icon class="material-icons" ng-class="md-48">edit</md-icon>
+        </md-button>
     </div>
     <!--div layout="row" flex>
         <md-button ng-show="!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-click="followArtist()" class="md-raised">follow</md-button>
@@ -10,38 +13,58 @@
     <!--div class="row" flex flex-offset="15" style="height:50px">
         <button ng-click="followArtist()" ng-class="($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'brn-default' : 'btn-success'" class="btn" value="{{!($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1) ? 'following' : 'follow'}}" >follow</button>
     </div-->
+    <div class="artist-profile-img">
     <div layout="row" layout-align="center" class="artist-header">
         <h1>{{selectedArtist.artistName}}</h1>
     </div>
-    <md-content class="album-section" layout-align="center" layout-padding flex>
-        <div layout="row" layout-align="center">
-            <h2>Albums</h2>
+        <md-divider></md-divider>
+    <div layout="row" layout-align="left center" layout-padding style="bottom:-50px;">
+        <h3>Albums</h3>
+        <md-button class="md-icon-button" aria-label="Location" ng-click="showCreateAlbum()" ng-show="isAdmin">
+            <md-icon class="material-icons" ng-class="md-48">add</md-icon>
+        </md-button>
+    </div>
+    <md-content class="album-section" layout-align="center" layout-padding layout="column">
+        <div class="album-header" layout="row" layout-align="center center">
+            <h3>{{selectedAlbum.albumName}}</h3>
+            <md-button class="md-icon-button" aria-label="Location" ng-click="showUpdateAlbum()" ng-show="isAdmin">
+                <md-icon class="material-icons" ng-class="md-48">edit</md-icon>
+            </md-button>
         </div>
-        <div layout="row" layout-align="center" class="albumSection"flex>
-            <div layout="column" flex="25">
+
+        <md-divider></md-divider>
+        <div layout-gt-sm="row" layout-lt-md="column" layout-align-lt-md="center" layout-align-gt-sm="space-around">
+            <div layout-align="center" layout="row">
                 <img ng-src="{{selectedAlbum.imageURL}}" class="album-profile-img" height="200" width="200"/>
             </div>
-            <div layout="column" flex="50">
-                <div class="album-header">
-                    {{selectedAlbum.albumName}}
-                </div>
-                <div class="track-listing">
-                    <ul style="list-style: none; padding:0px">
-                        <li ng-repeat="item in selectedAlbum.tracks">
-                            <span ng-click="play($index)" >{{$index + 1}} {{item.trackName}}</span>
-                        </li>
-                    </ul>
-                </div>
+            <div class="track-listing" layout="column">
+                <h3>Track Listing</h3>
+                <md-button class="md-icon-button" aria-label="Location" ng-click="showCreateTrack()" ng-show="isAdmin">
+                    <md-icon class="material-icons" ng-class="md-48">add</md-icon>
+                </md-button>
+                <md-divider></md-divider>
+                <ul style="list-style: none; padding:0px">
+                    <li ng-repeat="item in selectedAlbum.tracks" class="clickable">
+                        <span ng-click="play($index)" >{{$index + 1}}. {{item.trackName}}</span>
+                        <md-button class="md-icon-button" aria-label="Location" ng-show="isAdmin" ng-click="showDeleteTrack($event,$index, track.trackId)">
+                            <md-icon class="material-icons" ng-class="md-48">close</md-icon>
+                        </md-button>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div layout="row" layout-align="space-around">
+        <div layout="row" layout-align="space-around" >
             <img ng-repeat="album in selectedArtist.albums" class="albumSection clickable"  ng-src="{{album.imageURL}}" ng-click="selectAlbum($index)" height="75" width="75"/>
         </div>
     </md-content>
-    <md-content layout-padding>
-        <div layout="row" layout-align="center">
-            <h2>Events</h2>
-        </div>
+
+    <div layout="row" layout-align="center">
+        <h2>Events</h2>
+        <md-button class="md-icon-button" aria-label="Location" ng-click="showCreateEvent()" ng-show="isAdmin">
+            <md-icon class="material-icons" ng-class="md-48">add</md-icon>
+        </md-button>
+    </div>
+    <md-content layout-padding class="album-section" >
         <div layout="row">
             <table class="table table-striped">
                 <thead>
@@ -56,9 +79,16 @@
                     <td>{{event.eventDate}}</td>
                     <td>{{event.address}}  {{event.city}}, {{event.state}}</td>
                     <td><a href="{{event.url}}">{{event.name}} </a></td>
+                    <td ng-show="isAdmin"><md-button class="md-icon-button" aria-label="Location" ng-click="showCreateEvent()">
+                    <md-icon class="material-icons" ng-class="md-48">mode_edit</md-icon>
+                </md-button></td>
                 </tr>
                 </tbody>
                 </table>
         </div>
     </md-content>
+    </div>
+    <div class="buffer">
+
+    </div>
 </section>

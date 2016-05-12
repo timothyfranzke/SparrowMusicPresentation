@@ -105,6 +105,7 @@ sprwApp.controller('sparrowController', function($scope, $timeout, authServices,
         $state.go('login')
     };
     $scope.goDiscover = function(){
+        
         $state.go('discover');
     };
     $scope.goRegister = function(){
@@ -113,12 +114,12 @@ sprwApp.controller('sparrowController', function($scope, $timeout, authServices,
     $scope.goArtist = function(){
         $state.go('artist');
     };
-    $scope.goArtistProfile = function(id){
-        $location.path('/artist/' + id);
-    };
-    $scope.goArtistAdmin = function(id){
-        $location.path('/mymusic/' + id);
-    };
+    // $scope.goArtistProfile = function(id){
+    //     $location.path('/artist/' + id);
+    // };
+    // $scope.goArtistAdmin = function(id){
+    //     $location.path('/mymusic/' + id);
+    // };
     $scope.logout = function(){
         $cookies.remove('user_info');
     };

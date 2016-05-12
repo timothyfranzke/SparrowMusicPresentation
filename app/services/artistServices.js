@@ -43,6 +43,9 @@ sprwApp.factory('artistService', function(baseService){
        createEvent: function(eventData){
            return baseService.POST(artistEvent, eventData);
        },
+       createBulliten: function(bullitenData){
+           return baseService.POST(bulliten, bullitenData);
+       },
        deleteEvent: function(artistid, eventId, email, token){
            var query = "?eventId=" + eventId + "&userEmail=" + email + "&token=" + token + "&artistId=" + artistid;
            return baseService.DELETE(artistEvent, query);

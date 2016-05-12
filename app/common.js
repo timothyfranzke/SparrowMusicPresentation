@@ -34,7 +34,11 @@ function onFileSelected(event) {
 
 }
 
-var convertTDate = function(date){
+function FormatDate(date)
+{
+
+    //.. do further stuff here
+
     var firstDash = date.indexOf("-");
     var secondDash = date.indexOf("-");
     var tIndex = date.indexOf("-");
@@ -44,6 +48,15 @@ var convertTDate = function(date){
     var day = date.substr(secondDash,tIndex);
 
     return new Date(month + "/" + day + "/" + year);
+}
+var convertTDate = function(date){
+    var arr = date.split(/[- :T]/), // from your example var date = "2012-11-14T06:57:36+0000";
+
+        date = new Date(arr[1] + "-" + arr[2] + "-" + arr[0]);
+    console.log(arr[0] + " " + arr[1] + " " + arr[2] + " " + arr[3]);
+    console.log("date: " + date.toString("MMMM yyyy"));
+    return date;
+
 };
 
 var themes = {
@@ -105,5 +118,14 @@ $(function() {
         ]
     });
 });
+
+var dialogSettings = {
+    controller: 'dialogController',
+    templateUrl:'app/partials/templates/events.html',
+    parent: angular.element(document.body),
+    targetEvent: "",
+    clickOutsideToClose:true,
+    fullscreen: true
+};
 
 

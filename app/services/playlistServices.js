@@ -54,8 +54,8 @@ sprwApp.factory('playlistServices', function(baseService){
 
             for(var index in this.playlist){
                 var record = this.playlist  [index];
-                console.log("record pop index: " + JSON.stringify(record));
-                console.log("filter pop index: " + pop);
+                //console.log("record pop index: " + JSON.stringify(record));
+                //console.log("filter pop index: " + pop);
                 if (record.popIndex <= pop)
                 {
                     canFilter = true;

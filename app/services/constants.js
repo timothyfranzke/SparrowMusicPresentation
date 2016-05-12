@@ -1,8 +1,8 @@
 var localhost = 'http://localhost:33150/';
 var localhostWebApi = 'http://localhost:33150/';
 var azure = 'http://sparrowservice.azurewebsites.net/';
-var arvixe = 'http://franzkesandbox.com.jasmine.arvixe.com/';
-var base = localhost;
+var arvixe = 'http://sparrowservices.com.jasmine.arvixe.com/';
+var base = azure;
 var ext = 'v1/api/';
 
 //methods
@@ -37,6 +37,7 @@ var artistEvent = 'Artist/Event';
 var genre = 'Artist/Genre';
 var common = 'Artist/Common';
 var settings = 'Artist/Setting';
+var bulliten = 'Artist/Bulliten';
 
 //auth apis
 var auth = 'Auth/AuthenticateUser';
@@ -55,6 +56,7 @@ var albumDialogTemplate = baseDialogTemplate + "album.html";
 var trackDialogTemplate = baseDialogTemplate + "track.html";
 var confirmDialogTemplate = baseDialogTemplate + "confirm.html";
 var imageDialogTemplate = baseDialogTemplate + "imageCropper.html";
+var bullitenDialogTemplate = baseDialogTemplate + "Bulliten.html";
 
 //actions
 var deleteAction = "delete";

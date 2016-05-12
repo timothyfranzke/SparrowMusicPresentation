@@ -1,4 +1,4 @@
-<md-dialog aria-label="Create Artist"  ng-cloak>
+<md-dialog aria-label="Create Artist"  ng-cloak ng-class="$mdMedia('lt-md') ? '':'modifyModal'">
     <form>
         <div ng-controller="artistFormController">
             <md-toolbar>

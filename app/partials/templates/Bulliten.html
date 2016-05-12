@@ -1,0 +1,26 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Create Bulliten</h2>
+                <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content flex layout-padding layout="row">
+    <h4>A bulliten displays for each of your followers one time.  That's it!  You can only post one bulliten every 24 hours.  Choose your words wisely!</h4>
+    <div layout="column">
+        <md-input-container>
+            <label>Bulliten</label>
+            <input ng-model="bulliten" type="text" width="300px" height="200px">
+        </md-input-container>
+        </div>
+</md-dialog-content>
+<md-dialog-actions layout="row">
+    <md-button ng-click="create(bulliten)">
+        Create
+    </md-button>
+    <md-button ng-click="cancel()">
+        Cancel
+    </md-button>
+</md-dialog-actions>

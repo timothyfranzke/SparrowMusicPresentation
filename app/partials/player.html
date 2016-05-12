@@ -1,6 +1,6 @@
 <section layout="row" flex>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-        <md-toolbar class="md-theme-indigo">
+        <md-toolbar class="md-theme-indigo" layout="row">
             <h1 class="md-toolbar-tools">sparrow.</h1>
         </md-toolbar>
         <md-content layout="column" layout-padding ng-controller="menuController as cntrl">
@@ -28,8 +28,12 @@
     </md-sidenav>
     <md-content flex layout="column" md-swipe-right="toggleLeft()">
         <md-toolbar layout="row">
-            <div class="md-toolbar-tools">
+            <div class="md-toolbar-tools" layout="row">
                 <md-button ng-click="toggleLeft()">sparrow.</md-button>
+                <md-icon class="material-icon md-48" >mode_comment</md-icon>
+                <span id="bullitenCircle" layout-align="right">
+                    2
+                </span>
                 <!--md-button aria-label="Go Back" ng-click="toggleLeft()">
                     Go Back
                 </md-button>
@@ -62,8 +66,11 @@
             <md-button class="md-fab" aria-label="Eat cake" ng-click="followArtist()" style="bottom:25px;" ng-show="stateArtistFavorite">
                 <md-icon class="material-icon">favorite_border</md-icon>
             </md-button>
-            <md-button class="md-fab" aria-label="Eat cake" ng-click="unFollowArtist()" style="bottom:25px; color:red" ng-show="stateArtistUnFavorite">
+            <md-button class="md-fab" aria-label="Eat cake" ng-click="unFollowArtist()"  ng-show="stateArtistUnFavorite">
                 <md-icon class="material-icon" style="color:#D94551">favorite</md-icon>
+            </md-button>
+            <md-button class="md-fab" aria-label="Eat cake" ng-click="showArtistBulliten()" style="bottom:25px; color:red" ng-show="stateArtistBulliten">
+                <md-icon class="material-icon" >mode_comment</md-icon>
             </md-button>
         </div>
         <div layout="column" flex="33" layout-align="left">

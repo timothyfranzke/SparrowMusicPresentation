@@ -3,9 +3,10 @@
 
 <md-content>
     <md-list>
-        <md-list-item class="md-3-line" ng-repeat="event in followed.events">
+        <md-list-item class="md-3-line" ng-repeat="event in followed.events | orderBy: eventDate">
             <img ng-src="{{item.face}}?{{$index}}" class="face" alt="{{item.who}}">
             <div class="md-list-item-text">
+                <h2><a href="/artist/{{event.artistId}}">{{event.artistName}}</a></h2>
                 <h3>{{event.eventDate}}</h3>
                 <h4>{{event.name}}</h4>
                 <p><a ng-href="{{event.url}}">{{event.address}} {{event.city}} {{event.state}}</a></p>

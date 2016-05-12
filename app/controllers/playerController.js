@@ -1,24 +1,42 @@
 /**
  * Created by Timothy.Franzke on 1/6/2016.
  */
-sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $stateParams, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, metaData, artists){
-    var artistId = -1;
+sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $stateParams, $filter, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, metaData, artists){
+    var artistId = $scope.artistId = -1;
+    $scope.isBulliten = true;
+    var showToast = function(message) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .position("top right")
+                .hideDelay(3000)
+
+        );
+    };
+    var createBulliten = function(bullitenData){
+        console.log(bullitenData);
+        var bullitenModel = {};
+        bullitenModel.userEmail = userData.userEmail;
+        bullitenModel.token = userData.token;
+        bullitenModel.artistId = artistId;
+        bullitenModel.bulliten = bullitenData;
+        $scope.loading = true;
+        
+        artistService.createBulliten(bullitenModel).then(function(data){
+            $scope.loading = false;
+            showToast("Bulliten created successfully");
+        })
+    };
     $scope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
-            console.log("currentstate: " + JSON.stringify($stateParams));
-            console.log("toParams: " + JSON.stringify(toParams));
-            console.log("fromParams: " + JSON.stringify(fromParams));
-            console.log("scope");
-            console.log($scope);
             switch($state.current.name){
                 case 'player.artistProfile':
                     var isLiked = false;
-                    artistId = toParams.id;
+                    artistId = parseInt(toParams.id);
                     for(var i in $scope.followed.artistIds)
                     {
                         if (parseInt(toParams.id) === parseInt($scope.followed.artistIds[i]))
                         {
-
                             isLiked = true;
                             break;
                         }
@@ -29,18 +47,29 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
                         $scope.statePlayer = false;
                         $scope.stateArtistFavorite = false;
                         $scope.stateArtistUnFavorite = true;
+                        $scope.stateArtistBulliten = false;
                     }
                     else{
                         $scope.statePlayer = false;
                         $scope.stateArtistFavorite = true;
                         $scope.stateArtistUnFavorite = false;
+                        $scope.stateArtistBulliten = false;
                     }
 
                     break;
+                case 'player.artistProfileAdmin':
+                    artistId = parseInt(toParams.id);
+                    $scope.statePlayer = false;
+                    $scope.stateArtistFavorite = false;
+                    $scope.stateArtistUnFavorite = false;
+                    $scope.stateArtistBulliten = true;
+                    break;
                 default :
+                    console.log($state);
                     $scope.statePlayer = true;
                     $scope.stateArtistFavorite = false;
                     $scope.stateArtistUnFavorite = false;
+                    $scope.stateArtistBulliten = false;
                     break;
             }
         }
@@ -70,6 +99,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console
      */
+    console.log(68);
     function buildDelayedToggler(navID) {
         return debounce(function() {
             $mdSidenav(navID)
@@ -112,6 +142,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         discover.selected = false;
         mymusic.selected = false;
     };
+    console.log(111);
     $scope.follwed = userDataServices.followed;
     $scope.loading = false;
     $scope.player = playerService;
@@ -196,7 +227,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.saveFilterFormShow = false;
         $scope.selectFilterShow = false;
     };
-
+    console.log(196);
     $scope.showGenres = function(){
         closeAllFilters();
         $scope.genreShow = true;
@@ -256,7 +287,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
 
         return liked;
     };
-
+    console.log(256);
     $scope.go = function(id){
         switch (id){
             case 1:
@@ -288,7 +319,18 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
                 break;
         }
     };
+    $scope.showArtistBulliten = function(ev){
+        dialogSettings.templateUrl = bullitenDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "dialogController";
 
+        $mdDialog.show(dialogSettings)
+            .then(function(bulliten) {
+                createBulliten(bulliten);
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
     $scope.followArtist = function(){
 
         var model = {
@@ -318,7 +360,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
 
         });
     };
-
+    console.log(318);
     $scope.logout = function(){
         $cookies.remove("user_info");
         $state.go("login");
@@ -327,7 +369,11 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     userServices.getUserArtists(userData.userEmail).then(function(data){
         $scope.message = "Loading Playlist";
         userServices.setUserData(data);
+        for(var i in data.events){
+            data.events[i].eventDate = convertTDate(data.events[i].eventDate);
+        }
         $scope.followed = data;
+        console.log($scope);
     });
 
     userServices.getFilters(userData.userEmail, userData.token).then(function(data){
@@ -347,12 +393,11 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.playlist.currentFilter.min = data.min;
         $scope.playlist.currentFilter.max = data.max;
         $scope.playlist.currentFilter.popularity = data.max;
-        $scope.playlist.currentFilter.startDate = data.startDate;
-        console.log("data: " + JSON.stringify(data));
+        $scope.playlist.currentFilter.startDate = convertTDate(data.startDate);
         $scope.playlist.currentFilter.endDate = convertTDate(data.endDate);
         $scope.playlist.ogFilter = JSON.parse(JSON.stringify($scope.playlist.currentFilter));
     });
-
+    console.log(355);
     var fillPlaylist = function(){
         playlistServices.getDiscoverPlaylist().then(function(data){
             data.forEach(function(item){
@@ -362,7 +407,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
             $scope.playlist.playlist.push.apply($scope.playlist.playlist, data);
             $scope.player.current = $scope.playlist.playlist[0];
 
-            if (playlistServices.currentPage <= playlistServices.pages && playlistServices.currentPage < 4)
+            if (playlistServices.currentPage <= playlistServices.pages && playlistServices.currentPage < 6)
                 fillPlaylist();
         })
     };
@@ -378,5 +423,5 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     };
     fillPlaylist();
 
-
+    console.log(381);
 });

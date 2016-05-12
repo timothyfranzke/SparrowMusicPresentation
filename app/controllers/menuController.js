@@ -78,21 +78,26 @@ sprwApp.controller('menuController', function($scope, $state,$mdDialog, $mdMedia
         })
     };
     $scope.$watch("selectedArtistId", function(newVal, oldVal){
-        if (newVal != -1)
+        console.log("SELECTED ARTISTID NEW: " + newVal + "OLD: " + oldVal);
+        if (newVal != -1 && newVal != undefined)
         {
             $state.go('player.artistProfileAdmin',{'id':newVal});
         }
     });
     $scope.goArtist = function(artistId){
+        $scope.$parent.toggleRight();
        $state.go("player.artistProfile", {id:artistId});
     };
     $scope.goDiscover = function(){
+        $scope.$parent.toggleRight();
         $state.go("player.discover");
     };
     $scope.goMyMusic = function(){
+        $scope.$parent.toggleRight();
         $state.go("player.createArtist");
     };
     $scope.goEvents = function(){
+        $scope.$parent.toggleRight();
         $state.go("player.events");
     };
 });
