@@ -2,7 +2,7 @@ var localhost = 'http://localhost:33150/';
 var localhostWebApi = 'http://localhost:33150/';
 var azure = 'http://sparrowservice.azurewebsites.net/';
 var arvixe = 'http://sparrowservices.com.jasmine.arvixe.com/';
-var base = azure;
+var base = localhost;
 var ext = 'v1/api/';
 
 //methods

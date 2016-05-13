@@ -1,4 +1,4 @@
-sprwApp.factory('playerService', function (audio, $rootScope, trackServices, playlistServices) {
+sprwApp.factory('playerService', function (audio, $rootScope, trackServices, playlistServices, authServices) {
     var player,
         index = 0,
         filter,
@@ -36,6 +36,7 @@ sprwApp.factory('playerService', function (audio, $rootScope, trackServices, pla
             if (!this.playlist.length) return;
 
             if (angular.isDefined(item)) current = item;
+
             console.log(player.playing);
             if (player.playing) {
                 console.log("playing");
@@ -54,19 +55,30 @@ sprwApp.factory('playerService', function (audio, $rootScope, trackServices, pla
             }
         },
         next: function () {
-            var pop = {
-                "criteria": "skip",
-                "trackId": current.trackId
-            };
-            trackServices.trackPopularity(pop);
             if (!this.playlist.length) return;
-            if (index < this.playlist.length - 1)
+            if (this.playlist[index  + 1].isVisible)
             {
-                index++;
+                if (index < this.playlist.length - 1)
+                {
+                    index++;
+                }
+                else
+                {
+                    index = 0;
+                }
             }
-            else
-            {
-                index = 0;
+            else{
+                while (! this.playlist[index].isVisible )
+                {
+                    if (index < this.playlist.length - 1)
+                    {
+                        index++;
+                    }
+                    else
+                    {
+                        index = 0;
+                    }
+                }
             }
             current = this.playlist[index];
             if (playing)

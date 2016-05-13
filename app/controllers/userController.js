@@ -14,7 +14,7 @@ sprwApp.controller('userController', function($scope, $cookies, $state, userServ
     $scope.register = function(userModel){
         $scope.$parent.loading = true;
         userServices.createUser(userModel).then(function(data){
-            authServices.setUserData(userModel.userEmail, data.token);
+            authServices.setUserData(userModel.email, data.token);
             $scope.$parent.loading = false;
             $state.go('player.discover');
         })

@@ -21,12 +21,12 @@
                               md-colspan-sm="1"
                               ng-class="item.setting.theme.bg" ng-if="item.isVisible">
                     <span ng-hide="$mdMedia('gt-md')">
-                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="75px" height="75px" flex="initial"/>
-                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="75px" height="75px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="select(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="75px" height="75px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="select(item)" ng-src="{{item.setting.theme.img}}" width="75px" height="75px" flex="initial"/>
                     </span>
                     <span ng-show="$mdMedia('gt-md')">
-                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="player.play(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="125px" height="125px" flex="initial"/>
-                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="player.play(item)" ng-src="{{item.setting.theme.img}}" width="125px" height="125px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="item.setting.hasImage" ng-click="select(item)" ng-src="https://sparrowmusic.blob.core.windows.net/images/{{item.artistId}}/{{item.albumId}}/0.jpg" width="125px" height="125px" flex="initial"/>
+                        <img class="clickable" ng-class="item.setting.theme.border" ng-show="!item.setting.hasImage" ng-click="select(item)" ng-src="{{item.setting.theme.img}}" width="125px" height="125px" flex="initial"/>
                     </span>
                     <md-grid-tile-footer layout-align="center center">
                         <a ui-sref="player.artistProfile({id: item.artistId})" class="textWhite">{{item.artistName}}</a>

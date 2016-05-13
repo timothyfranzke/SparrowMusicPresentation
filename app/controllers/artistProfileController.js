@@ -1,7 +1,7 @@
 /**
  * Created by Timothy on 12/1/2015.
  */
-sprwApp.controller('artistProfileController', function($scope, authServices, artistService, userServices, userDataServices, $stateParams){
+sprwApp.controller('artistProfileController', function($scope, authServices, artistService, userServices, trackServices,userDataServices, $stateParams){
     $scope.isAdmin = false;
     var userData = {};
     $scope.settings = {};
@@ -14,11 +14,8 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
 
     //methods
     $scope.selectAlbum = function(index){
-        console.log("index: " + index);
-        console.log($scope.selectedAlbum);
         $scope.selectedAlbum = $scope.selectedArtist.albums[index];
         $scope.isAlbumSelected = true;
-        console.log($scope.selectedAlbum);
     };
 
     $scope.play = function(index){
@@ -34,6 +31,12 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
         $scope.$parent.player.index = index;
         $scope.$parent.player.play($scope.selectedAlbum.tracks[index]);
 
+        var pop = {
+            "criteria": "select",
+            "trackId": $scope.selectedAlbum.tracks[index].trackId,
+            "userEmail" : authServices.getUserData().userEmail
+        };
+        trackServices.trackPopularity(pop);
         console.log(JSON.stringify(track));
     };
 

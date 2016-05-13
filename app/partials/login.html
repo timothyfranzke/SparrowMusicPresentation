@@ -1,14 +1,20 @@
 <md-content layout-align="center center" layout-padding style="background-color:#6C3C56">
     <div layout="row" layout-align="center">
-        <div layout="column" layout-align="center">
-            <img src="img/logo-white-lg.png" height="50" width="50"/>
+        <div layout="column">
             <div layout="row" layout-align="center">
-                <h2 style="color:white">sparrow.</h2>
+                <img src="img/logo-white-lg.png" height="200px" width="200px" ng-show="$mdMedia('gt-sm')"/>
+                <img src="img/logo-white-lg.png" height="100px" width="100px" ng-hide="$mdMedia('gt-sm')"/>
+            </div>
+            <div layout="row" layout-align="center">
+                <h2 style="color:white">Sparrow Music</h2>
+            </div>
+            <div layout="row" layout-align="center">
+                <h4 style="color:white">The Best Online Source for Local Music</h4>
             </div>
         </div>
     </div>
     <div layout="row" layout-align="center" >
-        <div layout="column" layout-padding md-whiteframe="2" style="width:500px;">
+        <div layout="column" layout-padding md-whiteframe="2" style="width:500px; background:whitesmoke" >
             <md-input-container >
                 <label>Email</label>
                 <input ng-model="creds.email">
@@ -20,10 +26,10 @@
             <md-button ng-click="login(creds)" class="md-raised md-primary">Login</md-button>
             <div flex-xs flex="50">
                 <md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
-                    Checkbox 1: {{ data.cb1 }}
+                    Remember Me
                 </md-checkbox>
             </div>
-            <a class="login-help edit text-white" ui-sref="register">register</a>
+            <a class="login-help edit text-white" ui-sref="register">Sign Up</a>
             <a class="login-help edit text-white" ui-sref="forgotPassword">forgot my password</a>
         </div>
 

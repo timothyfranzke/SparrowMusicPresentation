@@ -1,7 +1,7 @@
 /**
  * Created by Timothy.Franzke on 1/6/2016.
  */
-sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $stateParams, $filter, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, playlistServices, userDataServices, userServices, playerService, authServices, metaData, artists){
+sprwApp.controller('playerController',function($scope, $timeout, $cookies, $state, $stateParams, $filter, $mdBottomSheet, $mdToast, $mdSidenav, $mdMedia, $mdDialog, $log, artistService, trackServices, playlistServices, userDataServices, userServices, playerService, authServices, metaData, artists){
     var artistId = $scope.artistId = -1;
     $scope.isBulliten = true;
     var showToast = function(message) {
@@ -227,7 +227,6 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.saveFilterFormShow = false;
         $scope.selectFilterShow = false;
     };
-    console.log(196);
     $scope.showGenres = function(){
         closeAllFilters();
         $scope.genreShow = true;
@@ -255,6 +254,25 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     };
     $scope.hideSpecificFilter = function(){
         closeAllFilters();
+    };
+    $scope.select = function(item)
+    {
+        var pop = {
+            "criteria": "select",
+            "trackId": item.trackId,
+            "userEmail" : authServices.getUserData().userEmail
+        };
+        trackServices.trackPopularity(pop);
+        $scope.player.play(item);
+    };
+    $scope.next = function(){
+        var pop = {
+            "criteria": "skip",
+            "trackId": current.trackId,
+            "userEmail" : authServices.getUserData().userEmail
+        };
+        trackServices.trackPopularity(pop);
+        $scope.player.next();
     };
     $scope.showFilterBottom = function(){
         $mdBottomSheet.show({

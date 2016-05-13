@@ -5,7 +5,7 @@ sprwApp.factory('playlistServices', function(baseService){
 
     return {
         playlistId:0,
-        pages:0,
+        pages:1,
         currentPage:1,
         playlist:[],
         ogPlaylist:[],

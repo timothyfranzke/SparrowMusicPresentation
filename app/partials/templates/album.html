@@ -1,4 +1,4 @@
-<md-dialog style="width:50%;height:50%" layout-align="top center" layout="column" ng-class="$mdMedia('lt-md') ? '':'modifyModal'">
+
 <md-toolbar>
     <div class="md-toolbar-tools">
         <h2>Create Album</h2>
@@ -8,7 +8,7 @@
         </md-button>
     </div>
 </md-toolbar>
-<md-dialog-content  layout-padding layout-align="center center" style="overflow:hidden; width:75%">
+<md-dialog-content  flex layout-padding layout="column">
     <div layout="column" class="slide" ng-show="albumNameShow">
         <md-input-container>
             <label>Album Name</label>
@@ -63,13 +63,13 @@
     <md-button ng-click="artistTheme=false; artistName=true" ng-show="artistTheme">
         Prev
     </md-button>
-    <md-button ng-click="goAlbumImageSelect()" ng-show="albumNameShow">
+    <md-button ng-click="goAlbumImageSelect()" ng-show="albumNameShow" ng-disabled="!album.albumName">
         Next
     </md-button>
     <md-button ng-click="goAlbumName()" ng-show="albumImageSelectShow">
         Prev
     </md-button>
-    <md-button class="md-raised" flex="100" ng-click="goAlbumFinalize()" ng-show="albumImageSelectShow">
+    <md-button class="md-raised" ng-click="goAlbumFinalize()" ng-show="albumImageSelectShow">
         Not Now
     </md-button>
     <md-button ng-click="goAlbumImageSelect()" ng-show="albumImageCropShow">
@@ -86,5 +86,3 @@
     </md-button>
 
 </md-dialog-actions>
-
-</md-dialog>
