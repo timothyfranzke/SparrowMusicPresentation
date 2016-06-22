@@ -33,10 +33,10 @@
                     <md-button ng-click="toggleLeft()"><md-icon class="material-icon md-48">menu</md-icon></md-button>
                 </div>
                 <div layout="row" layout-align="end" flex="50">
-                    <md-button>
+                    <md-button ng-click="showUserBulliten()">
                         <img src="img/logo-white-sm.png" width="45px" height="45px"/>
                         <!--md-icon class="material-icon md-48">mode_comment</md-icon-->
-                        <md-badge>2</md-badge>
+                        <md-badge ng-if="followed.bulliten.length > 0">{{followed.bulliten.length}}</md-badge>
                     </md-button>
                 </div>
 

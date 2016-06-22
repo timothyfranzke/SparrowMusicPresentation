@@ -27,6 +27,10 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
             showToast("Bulliten created successfully");
         })
     };
+
+    var clearUserBullitens = function(){
+        $scope.followed.bulliten = [];
+    };
     $scope.$on('$stateChangeSuccess',
         function(event, toState, toParams, fromState, fromParams) {
             switch($state.current.name){
@@ -84,6 +88,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         console.log("setting artists");
     }
     function debounce(func, wait, context) {
+        
         var timer;
         return function debounced() {
             var context = $scope,
@@ -120,7 +125,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     }
 
     $scope.toggleLeft = buildDelayedToggler('left');
-    $scope.toggleRight = buildToggler('right');
+    $scope.toggleRight = buildDelayedToggler('right');
 
     var events = {
         id:1,
@@ -275,6 +280,7 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
         $scope.player.next();
     };
     $scope.showFilterBottom = function(){
+        console.log("filter clicked");
         $mdBottomSheet.show({
             templateUrl: 'app/partials/templates/filters.html',
                 clickOutsideToClose: true,
@@ -349,6 +355,20 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
                 $scope.status = 'You cancelled the dialog.';
             });
     };
+    $scope.showUserBulliten = function(ev){
+        dialogSettings.templateUrl = userBullitenDialogTemplate;
+        dialogSettings.targetEvent = ev;
+        dialogSettings.controller = "dialogController";
+        dialogSettings.locals = { params: $scope.followed.bulliten }
+
+        $mdDialog.show(dialogSettings)
+            .then(function(bulliten) {
+                console.log("clear");
+                clearUserBullitens();
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+    };
     $scope.followArtist = function(){
 
         var model = {
@@ -419,7 +439,6 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     var fillPlaylist = function(){
         playlistServices.getDiscoverPlaylist().then(function(data){
             data.forEach(function(item){
-               item.setting = JSON.parse(item.setting);
                 item.isVisible = true;
             });
             $scope.playlist.playlist.push.apply($scope.playlist.playlist, data);
@@ -432,7 +451,6 @@ sprwApp.controller('playerController',function($scope, $timeout, $cookies, $stat
     $scope.nextPage = function(){
        playlistServices.getDiscoverPlaylist().then(function(data){
             data.forEach(function(item){
-                item.setting = JSON.parse(item.setting);
                 item.isVisible = true;
             });
             $scope.playlist.playlist.push.apply($scope.playlist.playlist, data);

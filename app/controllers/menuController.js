@@ -1,6 +1,7 @@
 sprwApp.controller('menuController', function($scope, $state,$mdDialog, $mdMedia, playlistServices, artistService, authServices){
     var userData = authServices.getUserData();
-
+    console.log("menu");
+    console.log($scope);
     var createArtist = function(artistData){
         console.log("create artist");
         var artist = {};
@@ -9,7 +10,7 @@ sprwApp.controller('menuController', function($scope, $state,$mdDialog, $mdMedia
         artist.name = artistData.name;
         artist.postalCode = artistData.postalCode;
         artist.setting = JSON.stringify(artistData.setting);
-
+        
         artistService.createArtist(artist).then(function(data){
             if (artistData.image !== undefined){
                 createArtistImage(artistData.image, data)
@@ -81,6 +82,7 @@ sprwApp.controller('menuController', function($scope, $state,$mdDialog, $mdMedia
         console.log("SELECTED ARTISTID NEW: " + newVal + "OLD: " + oldVal);
         if (newVal != -1 && newVal != undefined)
         {
+            //$scope.$parent.toggleLeft();
             $state.go('player.artistProfileAdmin',{'id':newVal});
         }
     });

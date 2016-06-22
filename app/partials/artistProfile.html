@@ -1,7 +1,7 @@
 <section layout="column">
-    <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.theme.bg" class="hue">
-        <img ng-show="settings.hasImage" ng-class="settings.theme.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="200" width="200"/>
-        <img ng-show="!settings.hasImage" ng-class="settings.theme.border" class="artist-profile-img" ng-src="{{settings.theme.img}}" height="200" width="200"/>
+    <div layout="row" layout-align="center" flex ng-init="following = ($parent.followed.artistIds.indexOf(selectedArtist.artistId) > -1)" ng-class="settings.bg" class="hue">
+        <img ng-show="settings.hasImage" ng-class="settings.border" ng-src="{{selectedArtist.imageURL}}" class="artist-profile-img" height="200" width="200"/>
+        <img ng-show="!settings.hasImage" ng-class="settings.border" class="artist-profile-img" ng-src="{{settings.img}}" height="200" width="200"/>
         <md-button class="md-icon-button artist-profile-img-edit" aria-label="Location" ng-click="showEditImage($event, 'ARTIST')" ng-show="isAdmin">
             <md-icon class="material-icons" ng-class="md-48">edit</md-icon>
         </md-button>

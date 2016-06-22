@@ -29,8 +29,12 @@ sprwApp.controller('trackController', function($scope, FileUploader, $mdDialog, 
 
     $scope.uploadAll = function(){
         uploader.queue.forEach(function(item){
+            var type = "audio";
+            if(item.file.type !== undefined){
+                type = item.file.type
+            }
             console.log(item);
-            item.url = base + "v1/api/Artist/CreateTrack?albumId=" + album.albumId + "&artistId=" + artistId + "&email=" + userData.userEmail + "&token=" + userData.token + "&trackName=" + item.file.name;
+            item.url = base + "v1/api/Artist/CreateTrack?albumId=" + album.albumId + "&artistId=" + artistId + "&email=" + userData.userEmail + "&token=" + userData.token + "&trackName=" + item.file.name + "&fileType=" + type;
             item.upload();
         })
     };

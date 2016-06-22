@@ -33,7 +33,7 @@
                 </div>
                 <div layout="column" ng-show="artistThemeShow" class="slide">
                     <h3>Choose A Theme</h3>
-                    <md-select ng-model="artist.setting.theme" ng-change="goArtistImageSelect()">
+                    <md-select ng-model="artist.setting" ng-change="goArtistImageSelect()">
                         <md-option ng-value="theme.theme" ng-repeat="theme in themes" >{{theme.color }}</md-option>
                     </md-select>
                     <md-button class="md-raised" flex="100" ng-click="randomSelectTheme()">
@@ -65,9 +65,9 @@
                     </md-button>
                 </div>
                 <div layout="column" layout-align="center" ng-show="artistFinalizeShow" class="slide">
-                    <div layout="row" layout-align="center" flex ng-class="artist.setting.theme.bg" class="hue">
-                        <img ng-show="artist.setting.hasImage" ng-class="artist.setting.theme.border" ng-src="{{artist.image}}" height="150" width="150"/>
-                        <img ng-show="!artist.setting.hasImage" ng-class="artist.setting.theme.border" ng-src="{{artist.setting.theme.img}}" height="150" width="150"/>
+                    <div layout="row" layout-align="center" flex ng-class="artist.setting.bg" class="hue">
+                        <img ng-show="artist.setting.hasImage" ng-class="artist.setting.border" ng-src="{{artist.image}}" height="150" width="150"/>
+                        <img ng-show="!artist.setting.hasImage" ng-class="artist.setting.border" ng-src="{{artist.setting.img}}" height="150" width="150"/>
                     </div>
                     <div layout="row" layout-align="center center" class="artist-header" flex="100">
                         <h1 flex>{{artist.name}}</h1>

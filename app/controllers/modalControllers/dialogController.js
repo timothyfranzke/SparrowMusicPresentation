@@ -1,4 +1,5 @@
-sprwApp.controller("dialogController", function($scope, $mdDialog){
+sprwApp.controller("dialogController", function($scope, $mdDialog, params){
+    $scope.params = params;
     $scope.create = function(item){
         $mdDialog.hide(item);
     };

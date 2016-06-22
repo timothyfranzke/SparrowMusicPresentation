@@ -125,12 +125,12 @@ sprwApp.controller('artistProfileController', function($scope, authServices, art
                 var bDate = new Date(Date.parse(b.eventDate));
                 return aDate > bDate;
             });
-            $scope.selectedArtist.imageURL = imageBase + $stateParams.id + "/0.jpg";
-            $scope.settings =JSON.parse(data.settings);
+            $scope.selectedArtist.imageURL = imageBase + $stateParams.id + "/" + data.imgId + ".jpg";
+            $scope.settings = data.settings;
 
             data.albums.forEach(function(album){
                 if(album.hasImage){
-                    album.imageURL = imageBase + $stateParams.id + "/" + album.albumId + "/0.jpg";
+                    album.imageURL = imageBase + $stateParams.id + "/" + album.albumId + "/" + album.imgId + ".jpg";
                 }
                 else{
                     album.imageURL = "img/default.jpg";

@@ -37,9 +37,12 @@
     </div>
     <div id="releaseDateFilter" ng-show="releaseDateShow" class="slideOutIn">
         <md-button class="md-icon-button" aria-label="return" ng-click="hideSpecificFilter()">
-            <md-icon class="material-icons" ng-class="md-48">keyboard_return</md-icon>
+            <md-icon class="material-icons" ng-class="md-48">back</md-icon>
         </md-button>
         <label>Released On</label>
+        <!--<md-select>
+            &lt;!&ndash;<md-option ng-model="releaseDate.number" ng-repeat=""&ndash;&gt;
+        </md-select>-->
         <md-datepicker md-placeholder="From" ng-model="player.currentFilter.startDate" ng-change="filter.byReleaseDate()"></md-datepicker>
         <md-datepicker md-placeholder="To" ng-model="player.currentFilter.endDate" ng-change="filter.byReleaseDate()"></md-datepicker>
     </div>

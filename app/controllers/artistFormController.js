@@ -110,7 +110,7 @@ sprwApp.controller('artistFormController', function($scope, $state, $mdDialog, a
     });
 
     var setTheme = $scope.setTheme = function(theme){
-        $scope.artist.setting.theme = theme;
+        $scope.artist.setting = theme;
         //console.log($scope);
         goArtistImageSelect();
     };

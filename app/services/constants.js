@@ -45,6 +45,7 @@ var resetPassword = 'Auth/ResetPassword';
 var forgotPassword = 'Auth/ForgotPassword';
 
 //files
+var localBase = "http://localhost";
 var imageBase = "https://sparrowmusic.blob.core.windows.net/images/";
 var audioBase = "https://sparrowmusic.blob.core.windows.net/tracks/";
 
@@ -57,6 +58,7 @@ var trackDialogTemplate = baseDialogTemplate + "track.html";
 var confirmDialogTemplate = baseDialogTemplate + "confirm.html";
 var imageDialogTemplate = baseDialogTemplate + "imageCropper.html";
 var bullitenDialogTemplate = baseDialogTemplate + "Bulliten.html";
+var userBullitenDialogTemplate = baseDialogTemplate + "userBullitens.html";
 
 //actions
 var deleteAction = "delete";

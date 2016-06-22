@@ -1,3 +1,15 @@
-<md-content>
-
-</md-content>
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <h2>Bullitens</h2>
+        <span flex></span>
+        <md-button class="md-icon-button closeBtn" ng-click="create()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog">close</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content flex layout-padding layout="column">
+    <div ng-repeat="bulliten in params">
+        <h2>{{bulliten.aristName}}</h2>
+        {{bulliten.bulliten}}
+    </div>
+</md-dialog-content>

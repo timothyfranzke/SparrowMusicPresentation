@@ -124,7 +124,7 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
             $scope.$parent.loading = false;
             $scope.isCreateingAlbumImage = false;
             $scope.selectedAlbum.hasImage = true;
-            $scope.selectedAlbum.imageURL = imageBase + $stateParams.id + "/" + $scope.selectedAlbum.albumId +  "/0.jpg?" + time;
+            $scope.selectedAlbum.imageURL = imageBase + $stateParams.id + "/" + $scope.selectedAlbum.albumId +  "/" + data + ".jpg?" + time;
         });
     };
 
@@ -246,13 +246,13 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
 
     $scope.openAlbum = function (modify) {
         $mdDialog.show({
-            controller: 'albumDialogController',
-            templateUrl: 'app/partials/templates/artistForm/artistForm.html',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose:true,
-            fullscreen: true
-        })
+                controller: 'albumDialogController',
+                templateUrl: 'app/partials/templates/artistForm/artistForm.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: true
+            })
             .then(function(answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
             }, function() {
@@ -571,6 +571,8 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
     };
 
     $scope.createTrack = function(){
+        console.log("FILE!!!");
+        console.log($scope);
         var file = $scope.myFile;
         trackServices.uploadFileToUrl(file, $scope.selectedAlbum.albumId, $scope.selectedArtist.artistId, userData.userEmail, userData.token, $scope.track.trackName).then(function(data){
             var newTrack = JSON.parse(JSON.stringify($scope.track));
@@ -693,11 +695,11 @@ sprwApp.controller('artistProfileAdminController', function($scope, $stateParams
                 }
                 event.eventDate = month + "/" + day + "/" + eDate.getFullYear();
             });
-            $scope.settings =JSON.parse(data.settings);
-            $scope.selectedArtist.imageURL = imageBase + $stateParams.id + "/0.jpg";
+            $scope.settings =data.settings;
+            $scope.selectedArtist.imageURL = imageBase + $stateParams.id + "/" + data.imgId + ".jpg";
             data.albums.forEach(function(album){
                 if(album.hasImage){
-                    album.imageURL = imageBase + $stateParams.id + "/" + album.albumId + "/0.jpg";
+                    album.imageURL = imageBase + $stateParams.id + "/" + album.albumId + "/" + album.imgId + ".jpg";
                 }
                 else{
                     album.imageURL = "img/default.jpg";
